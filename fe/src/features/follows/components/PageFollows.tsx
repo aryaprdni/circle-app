@@ -1,26 +1,12 @@
 import { Tab, TabList, TabPanel, TabPanels, Tabs, Box, Avatar, Flex, Text, Button, Spacer } from "@chakra-ui/react";
-import { GET_FOLLOWS, SET_FOLLOW_STATE } from "../../../store/RootReducer";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../../store/types/RootState";
+import { SET_FOLLOW_STATE } from "../../../store/RootReducer";
+import { useDispatch } from "react-redux";
 import { IFollow } from "../../../interface/IFollow";
-import { useEffect } from "react";
-import { API } from "../../../libs/axios";
+import useFollows from "../hooks/useFollows";
 
 const PageFollows = () => {
   const dispatch = useDispatch();
-  const followState = useSelector((state: RootState) => state.follow.followState);
-  const follows = useSelector((state: RootState) => state.follow.follows);
-  console.log("pagefollows follows", follows);
-
-  async function getFollowData() {
-    const response = await API.get(`/follow?type=${followState}`);
-    console.log("response", response);
-    dispatch(GET_FOLLOWS(response.data));
-  }
-
-  useEffect(() => {
-    getFollowData();
-  }, [followState]);
+  const { handleFollow, follows } = useFollows();
 
   return (
     <Box>
@@ -43,33 +29,36 @@ const PageFollows = () => {
                   <Text fontSize="xs">{follow.bio}</Text>
                 </Box>
                 <Spacer />
-                <Button colorScheme="teal" size="sm">
-                  Follow
+                <Button colorScheme="teal" size="sm" onClick={() => handleFollow(follow.id, follow.userId, follow.is_following)}>
+                  {follow.is_following ? "Unfollow" : "Follow"}
                 </Button>
               </Flex>
             ))}
           </TabPanel>
           <TabPanel>
-            {follows.map((follow: IFollow, index: number) => (
-              <Flex key={index} gap={5} mb={5} alignItems={"center"}>
-                <Avatar size="md" src={follow.profile_picture} />
-                <Box color="white">
-                  <Text fontSize="md">{follow.full_name}</Text>
-                  <Text color="grey" fontSize="xs">
-                    @{follow.username}
-                  </Text>
-                  <Text fontSize="xs">{follow.bio}</Text>
-                </Box>
-                <Spacer />
-                <Button colorScheme="teal" size="sm">
-                  Following
-                </Button>
-              </Flex>
-            ))}
+            {follows
+              .filter((follow: IFollow) => follow.is_following) // Filter out users who are not being followed
+              .map((follow: IFollow, index: number) => (
+                <Flex key={index} gap={5} mb={5} alignItems={"center"}>
+                  <Avatar size="md" src={follow.profile_picture} />
+                  <Box color="white">
+                    <Text fontSize="md">{follow.full_name}</Text>
+                    <Text color="grey" fontSize="xs">
+                      @{follow.username}
+                    </Text>
+                    <Text fontSize="xs">{follow.bio}</Text>
+                  </Box>
+                  <Spacer />
+                  <Button colorScheme="teal" size="sm" onClick={() => handleFollow(follow.id, follow.userId, follow.is_following)}>
+                    {follow.is_following ? "Unfollow" : "Follow"}
+                  </Button>
+                </Flex>
+              ))}
           </TabPanel>
         </TabPanels>
       </Tabs>
     </Box>
   );
 };
+
 export default PageFollows;

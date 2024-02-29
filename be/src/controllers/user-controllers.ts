@@ -13,6 +13,9 @@ export default new (class UserControllers {
       const response = await userServices.Register(value, res);
       return res.status(201).json(response);
     } catch (error) {
+      if (res.headersSent) {
+        return;
+      }
       return res.status(500).json({
         message: "Internal server error",
         error: error.message,

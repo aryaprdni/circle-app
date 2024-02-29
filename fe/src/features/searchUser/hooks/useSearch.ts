@@ -18,7 +18,7 @@ export function useSearchUsers() {
     setSearch(search);
 
     if (search === "") {
-      setFilteredResults(searchUsers.users.filter((user) => user.id !== auth?.data.id));
+      setFilteredResults(searchUsers.users.filter((user: any) => user.id !== auth?.data.id));
     } else if (auth) {
       const filteredUsers = searchUsers.users.filter((user: IUserSearch) => {
         return user.id !== auth.data.id && Object.values(user).join("").toLowerCase().includes(search.toLowerCase());

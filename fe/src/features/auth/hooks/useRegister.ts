@@ -19,7 +19,8 @@ export function useRegister() {
 
   async function handleRegister() {
     try {
-      await API.post("/user/register", form);
+      const response = await API.post("/user/register", form);
+      console.log(response);
     } catch (error) {
       console.log(error);
     }

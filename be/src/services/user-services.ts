@@ -10,16 +10,6 @@ export default new (class UserServices {
   private readonly UserRepository: Repository<User> = AppDataSource.getRepository(User);
   async Register(data: any, res: Response): Promise<object | string> {
     try {
-      const check_full_name = await this.UserRepository.exists({
-        where: {
-          full_name: data.full_name,
-        },
-      });
-      if (check_full_name)
-        return res.status(409).json({
-          message: `message: username ${data.full_name} already exist`,
-        });
-
       const checkEmail = await this.UserRepository.exists({
         where: {
           email: data.email,
@@ -30,14 +20,20 @@ export default new (class UserServices {
           message: `message: email ${data.email} already exist`,
         });
 
-      const randomNumber = randomInt(1000, 9999);
-      const generatedUsername = `${data.full_name.replace(/\s+/g, "_").toLowerCase()}${randomNumber}`;
+      const checkUsername = await this.UserRepository.exists({
+        where: {
+          username: data.username,
+        },
+      });
+      if (checkUsername)
+        return res.status(409).json({
+          message: `message: username ${data.username} already exist`,
+        });
 
       const hashPassword = await bcrypt.hash(data.password, 10);
 
       const obj = {
         ...data,
-        username: generatedUsername,
         password: hashPassword,
       };
 

@@ -35,7 +35,7 @@ const Main = ({ children }: { children: React.ReactNode }) => {
           <Box position="fixed">
             <Profile />
             <Box mt={4}>
-              <SuggestedFollowing id={0} userId={0} username={""} full_name={""} email={""} photo_profile={""} description={""} isFollowed={false} />
+              <SuggestedFollowing />
             </Box>
           </Box>
         </GridItem>

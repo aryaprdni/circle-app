@@ -2,10 +2,12 @@ import { Container, Card, Box, Flex, Heading, Text, Input, Button } from "@chakr
 import { useSelector } from "react-redux";
 import { RootState } from "../../../store/types/RootState";
 import { useLogin } from "../hooks/useLogin";
+import { useNavigate } from "react-router-dom";
 
 const FormLogin = () => {
   const { handleChange, handleLogin } = useLogin();
   const auth = useSelector((state: RootState) => state.auth);
+  const navigate = useNavigate();
   return (
     <>
       <Container display="flex" alignItems="center" justifyContent="center" h="100vh">
@@ -33,7 +35,7 @@ const FormLogin = () => {
           </Button>
           <Flex fontSize="13px" mt={1} gap="2px">
             <Text>Don't have an account?</Text>
-            <Text color="green" textDecoration="underline">
+            <Text color="green" textDecoration="underline" onClick={() => navigate("/register")} cursor={"pointer"}>
               Create Account
             </Text>
           </Flex>
@@ -44,3 +46,6 @@ const FormLogin = () => {
 };
 
 export default FormLogin;
+function useNagivate() {
+  throw new Error("Function not implemented.");
+}
