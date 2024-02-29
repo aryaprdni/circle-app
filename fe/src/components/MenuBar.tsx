@@ -1,13 +1,22 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { Box, Button, Flex, Text, Container, Spacer, useBreakpointValue } from "@chakra-ui/react";
 import { RiUserSearchFill } from "react-icons/ri";
 import { FaHome } from "react-icons/fa";
 import { FaHeart } from "react-icons/fa";
 import { CgProfile } from "react-icons/cg";
 import { CiLogout } from "react-icons/ci";
+import { AUTH_LOGOUT } from "../store/RootReducer";
+import { useDispatch } from "react-redux";
 
 const MenuBar = () => {
   const Menubar = useBreakpointValue({ base: "auto", lg: "90vh" });
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  async function handleLogout() {
+    dispatch(AUTH_LOGOUT());
+    navigate("/login");
+  }
+
   return (
     <>
       <Container>
@@ -58,7 +67,7 @@ const MenuBar = () => {
 
           <Spacer />
 
-          <NavLink to="/logout">
+          <NavLink to="/login" onClick={handleLogout}>
             <Flex alignItems="center" color="white" ml="30px">
               <CiLogout fontSize="30px" />
               <Text ml="10px" fontSize="1xl" display={{ base: "none", lg: "block", xl: "block" }}>

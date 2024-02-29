@@ -15,10 +15,10 @@ export class User {
   @Column()
   full_name: string;
 
-  @Column()
+  @Column({ nullable: true })
   email: string;
 
-  @Column()
+  @Column({ nullable: true })
   password: string;
 
   @Column({ nullable: true })

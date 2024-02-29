@@ -5,7 +5,7 @@ import { followSlice } from "./slice/followSlice";
 import { usersSlice } from "./slice/userSlice";
 import { repliesSlice } from "./slice/repliesSlice";
 
-export const { AUTH_LOGIN, AUTH_CHECK, AUTH_ERROR, AUTH_LOGOUT } = authSlice.actions;
+export const { AUTH_LOGIN, AUTH_CHECK, AUTH_ERROR, AUTH_LOGOUT, AUTH_UPDATE } = authSlice.actions;
 export const { GET_THREADS, SET_THREAD_LIKE } = threadSlice.actions;
 export const { POST_THREAD } = postThreadSlice.actions;
 export const { GET_FOLLOWS, SET_FOLLOW, SET_FOLLOW_STATE } = followSlice.actions;

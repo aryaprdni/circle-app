@@ -11,7 +11,7 @@ const router = express.Router();
 
 // User
 router.post("/user/register", UserControllers.Register);
-router.patch("/user/:id", authMiddleware.Auth, uploadFile("image"), UserControllers.Update);
+router.patch("/user/edit-profile", authMiddleware.Auth, uploadFile("image"), UserControllers.Update);
 router.post("/user/login", UserControllers.login);
 router.get("/users", authMiddleware.Auth, UserControllers.getAll);
 // router.get("/user/:id", authMiddleware.Auth, UserControllers.getOne);
@@ -38,9 +38,9 @@ router.get("/like", authMiddleware.Auth, likesControllers.getAll);
 router.get("/like/:id", authMiddleware.Auth, likesControllers.getById);
 
 // Follows
-router.post("/follows", authMiddleware.Auth, followsControllers.create);
-router.get("/follows", authMiddleware.Auth, followsControllers.find);
-router.delete("/follows/:followingUserId", authMiddleware.Auth, followsControllers.delete);
+router.post("/follow", authMiddleware.Auth, followsControllers.create);
+router.get("/follow", authMiddleware.Auth, followsControllers.find);
+router.delete("/follow/:followerUserId", authMiddleware.Auth, followsControllers.delete);
 // router.get("/follows/:id", authMiddleware.Auth, followsControllers.getById);
 
 export default router;

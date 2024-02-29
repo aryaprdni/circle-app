@@ -3,8 +3,11 @@ export interface IAuth {
   username: string;
   full_name: string;
   email: string;
+  bio: string;
   profile_picture?: string;
   profile_description?: string;
+  followers_count: number;
+  followings_count: number;
 }
 
 export interface IRegister {
@@ -25,4 +28,11 @@ export interface IUserSearch {
   full_name: string;
   bio: string;
   profile_picture?: string;
+}
+
+export interface IEditProfile {
+  id: number;
+  username: string;
+  full_name: string;
+  bio: string;
 }

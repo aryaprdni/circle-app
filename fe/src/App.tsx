@@ -1,4 +1,4 @@
-import React from "react";
+import { useEffect } from "react";
 import { Routes, Route, Navigate, Outlet, useNavigate } from "react-router-dom";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
@@ -26,8 +26,12 @@ const App = () => {
     }
   }
 
-  React.useEffect(() => {
-    checkAuth();
+  useEffect(() => {
+    if (!localStorage.token) {
+      navigate("/login");
+    } else {
+      checkAuth();
+    }
   }, []);
 
   function isNotLogin() {

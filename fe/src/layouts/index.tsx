@@ -2,7 +2,7 @@
 import { Box, Grid, GridItem } from "@chakra-ui/react";
 import MenuBar from "../components/MenuBar";
 import Profile from "../components/Profile";
-import SuggestedFollowing from "../features/follow/SuggestedFollowing";
+import SuggestedFollowing from "../features/follows/components/SuggestedFollowing";
 
 const Main = ({ children }: { children: React.ReactNode }) => {
   return (

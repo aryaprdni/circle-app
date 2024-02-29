@@ -1,8 +1,10 @@
+import { Container } from "@chakra-ui/react";
+import EditProfile from "../features/editProfile/component/EditProfile";
 const Profile = () => {
   return (
-    <div>
-      <h1>Profile</h1>
-    </div>
+    <Container>
+      <EditProfile />
+    </Container>
   );
 };
 

@@ -9,8 +9,11 @@ const initialAuthState: { data: IAuth } = {
     username: "",
     full_name: "",
     email: "",
+    bio: "",
     profile_picture: "",
     profile_description: "",
+    followers_count: 0,
+    followings_count: 0,
   },
 };
 
@@ -29,8 +32,11 @@ export const authSlice = createSlice({
         username: payload.user.username,
         full_name: payload.user.full_name,
         email: payload.user.email,
+        bio: payload.user.bio,
         profile_picture: payload.user.profile_picture,
         profile_description: payload.user.profile_description,
+        followers_count: payload.user.followers_count,
+        followings_count: payload.user.followings_count,
       };
 
       state.data = user;
@@ -42,14 +48,43 @@ export const authSlice = createSlice({
         username: payload.user.username,
         full_name: payload.user.full_name,
         email: payload.user.email,
+        bio: payload.user.bio,
         profile_picture: payload.user.profile_picture,
         profile_description: payload.user.profile_description,
+        followers_count: payload.user.followers_count,
+        followings_count: payload.user.followings_count,
       };
 
       state.data = user;
     },
-    AUTH_LOGOUT: (_state, _action) => {
+    AUTH_UPDATE: (state, action) => {
+      const { username, full_name, bio } = action.payload;
+      return {
+        ...state,
+        data: {
+          ...state.data,
+          username,
+          full_name,
+          bio,
+        },
+      };
+    },
+
+    AUTH_LOGOUT: (state) => {
       localStorage.removeItem("token");
+      setAuthToken(null);
+
+      state.data = {
+        id: 0,
+        username: "",
+        full_name: "",
+        email: "",
+        bio: "",
+        profile_picture: "",
+        profile_description: "",
+        followers_count: 0,
+        followings_count: 0,
+      };
     },
 
     AUTH_ERROR: (_state, _action) => {

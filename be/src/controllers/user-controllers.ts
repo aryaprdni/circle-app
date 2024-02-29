@@ -32,7 +32,6 @@ export default new (class UserControllers {
       if (res.headersSent) {
         return;
       }
-
       return res.status(500).json({
         message: "Internal server error",
         error: error.message,
@@ -42,12 +41,12 @@ export default new (class UserControllers {
 
   async Update(req: Request, res: Response) {
     try {
+      const userId = res.locals.loginSession.id;
       const data = {
+        id: userId,
         username: req.body.username,
         full_name: req.body.full_name,
         bio: req.body.bio,
-        email: req.body.email,
-        password: req.body.password,
         profile_picture: req.file ? res.locals.filename : null,
         profile_description: req.file ? res.locals.filename : null,
       };
@@ -68,6 +67,10 @@ export default new (class UserControllers {
       return res.status(201).json(response);
     } catch (error) {
       console.error("Caught an error:", error);
+      if (res.headersSent) {
+        return;
+      }
+
       return res.status(500).json({
         message: "Internal server error",
         error: error.message,

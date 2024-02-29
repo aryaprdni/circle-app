@@ -7,11 +7,12 @@ const registerValidation = Joi.object({
 });
 
 const updateValidation = Joi.object({
-  username: Joi.string().max(100).required(),
-  full_name: Joi.string().max(100).required(),
-  bio: Joi.string().max(100).required(),
-  email: Joi.string().max(100).required(),
-  password: Joi.string().min(4).max(100).required(),
+  id: Joi.number().required(),
+  username: Joi.string().max(100).allow(null),
+  full_name: Joi.string().max(100).allow(null),
+  bio: Joi.string().max(100).allow(null),
+  // email: Joi.string().max(100).allow(null),
+  // password: Joi.string().min(4).max(100).allow(null),
   profile_description: Joi.string().allow(null),
   profile_picture: Joi.string().allow(null),
 });

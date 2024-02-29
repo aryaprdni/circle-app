@@ -58,6 +58,7 @@ export default new (class UserServices {
     try {
       const checkUser = await this.UserRepository.findOne({
         where: [{ username: Like(`%${data.username}%`) }, { email: Like(`%${data.username}%`) }],
+        relations: ["follower", "following"],
       });
 
       if (!checkUser) {
@@ -86,6 +87,11 @@ export default new (class UserServices {
           username: checkUser.username,
           full_name: checkUser.full_name,
           email: checkUser.email,
+          photo_profile: checkUser.photo_profile,
+          photo_background: checkUser.photo_background,
+          bio: checkUser.bio,
+          followers_count: checkUser.follower.length,
+          followings_count: checkUser.following.length,
         },
       };
     } catch (error) {
@@ -100,34 +106,45 @@ export default new (class UserServices {
 
   async Update(data: any, res: Response): Promise<object | string> {
     try {
-      const check_full_name = await this.UserRepository.exists({
+      const user = await this.UserRepository.findOne({
         where: {
-          full_name: data.full_name,
+          id: data.id,
         },
       });
-      if (check_full_name)
-        return res.status(409).json({
-          message: `message: username ${data.full_name} already exist`,
-        });
 
-      const checkEmail = await this.UserRepository.exists({
-        where: {
-          email: data.email,
-        },
-      });
-      if (checkEmail)
-        return res.status(409).json({
-          message: `message: email ${data.email} already exist`,
+      if (!user) {
+        return res.status(404).json({
+          message: `User with ID ${data.id} not found`,
         });
+      }
 
-      const response = await this.UserRepository.save(data);
+      if (user) {
+        return res.status(404).json({
+          message: `username ${data.username} already exists`,
+        });
+      }
+
+      if (data.username) {
+        user.username = data.username;
+      }
+      if (data.full_name) {
+        user.full_name = data.full_name;
+      }
+      if (data.bio) {
+        user.bio = data.bio;
+      }
+      if (data.email) {
+        user.email = data.email;
+      }
+
+      const response = await this.UserRepository.save(user);
       return {
-        message: "Register success",
+        message: "Updated success",
         data: response,
       };
     } catch (error) {
       return {
-        message: "Register failed",
+        message: "Updated failed",
         error: error.message,
       };
     }
@@ -168,6 +185,7 @@ export default new (class UserServices {
   async check(loginSession: any): Promise<any> {
     try {
       const user = await this.UserRepository.findOne({
+        relations: ["follower", "following"],
         where: {
           id: loginSession,
         },
@@ -180,8 +198,11 @@ export default new (class UserServices {
           full_name: user.full_name,
           username: user.username,
           email: user.email,
+          bio: user.bio,
           photo_profile: user.photo_profile,
           photo_background: user.photo_background,
+          followers_count: user.follower.length,
+          followings_count: user.following.length,
         },
       };
     } catch (error) {
