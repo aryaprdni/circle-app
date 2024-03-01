@@ -2,41 +2,44 @@ import { Request, Response } from "express";
 import { createValidation, updateValidation } from "../utils/validator/threads-validation";
 import cloudinary from "../libs/cloudinary";
 import ThreadsService from "../services/threads-services";
+import ThreadQueue from "../queue/ThreadQueue";
 
 export default new (class ThreadsController {
+  // async create(req: Request, res: Response) {
+  //   try {
+  //     const userId = res.locals.loginSession.id;
+  //     const data = {
+  //       content: req.body.content,
+  //       image: req.file ? res.locals.filename : null,
+  //     };
+
+  //     const { error, value } = createValidation.validate(data);
+  //     if (error) return res.status(400).json(error);
+
+  //     if (req.file) {
+  //       cloudinary.upload();
+  //       const cloudinaryRes = await cloudinary.destination(value.image);
+  //       value.image = cloudinaryRes.secure_url;
+  //     }
+
+  //     const obj = {
+  //       ...value,
+  //       user: userId,
+  //     };
+
+  //     const response = await ThreadsService.create(obj);
+  //     return res.status(201).json(response);
+  //   } catch (error) {
+  //     console.error("Error in ThreadsController create method:", error);
+  //     return res.status(500).json({
+  //       message: "Internal server error",
+  //       error: error.message,
+  //     });
+  //   }
+  // }
   async create(req: Request, res: Response) {
-    try {
-      const userId = res.locals.loginSession.id;
-      const data = {
-        content: req.body.content,
-        image: req.file ? res.locals.filename : null,
-      };
-
-      const { error, value } = createValidation.validate(data);
-      if (error) return res.status(400).json(error);
-
-      if (req.file) {
-        cloudinary.upload();
-        const cloudinaryRes = await cloudinary.destination(value.image);
-        value.image = cloudinaryRes.secure_url;
-      }
-
-      const obj = {
-        ...value,
-        user: userId,
-      };
-
-      const response = await ThreadsService.create(obj);
-      return res.status(201).json(response);
-    } catch (error) {
-      console.error("Error in ThreadsController create method:", error);
-      return res.status(500).json({
-        message: "Internal server error",
-        error: error.message,
-      });
-    }
+    ThreadQueue.create(req, res);
   }
-
   async update(req: Request, res: Response) {
     try {
       const id = parseInt(req.params.id, 10);
@@ -55,7 +58,6 @@ export default new (class ThreadsController {
       const { error, value } = updateValidation.validate(data);
       if (error) return res.status(400).json(error);
 
-      cloudinary.upload();
       const cloudinaryRes = await cloudinary.destination(value.image);
 
       const obj = {

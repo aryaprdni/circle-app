@@ -31,6 +31,7 @@ export function useThreads() {
       formData.append("image", data.image as File);
 
       const response = await API.post("/threads", formData);
+      console.log("test", response.data);
       dispatch(POST_THREAD(response.data));
       await getThreads();
     } catch (error) {

@@ -16,7 +16,6 @@ export default new (class RepliesController {
       if (error) return res.status(400).json(error);
 
       if (req.file) {
-        cloudinary.upload();
         const cloudinaryRes = await cloudinary.destination(value.image);
         value.image = cloudinaryRes.secure_url;
       }
@@ -57,7 +56,6 @@ export default new (class RepliesController {
       const { error, value } = updateValidation.validate(data);
       if (error) return res.status(400).json(error);
 
-      cloudinary.upload();
       const cloudinaryRes = await cloudinary.destination(value.image);
 
       const obj = {

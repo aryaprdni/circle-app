@@ -58,7 +58,6 @@ export default new (class UserControllers {
       if (error) return res.status(400).json(error);
 
       if (req.file) {
-        cloudinary.upload();
         const cloudinaryResProfilePic = await cloudinary.destination(value.profile_picture);
         value.profile_picture = cloudinaryResProfilePic.secure_url;
 

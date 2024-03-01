@@ -1,20 +1,20 @@
 import { v2 as cloudinary } from "cloudinary";
 
-export default new class CloudinaryConfig {
-    upload() {
-        cloudinary.config({
-            cloud_name: 'dfxemmpwk',
-            api_key: '473542356422835',
-            api_secret: 'znKAF-l7cnqMLAp1heOFyDXGxrg',
-            secure: true,
-        })
-    }
+export default new (class CloudinaryConfig {
+  config() {
+    cloudinary.config({
+      cloud_name: process.env.CLOUDINARY_NAME,
+      api_key: process.env.API_KEY,
+      api_secret: process.env.API_SECRET,
+      secure: true,
+    });
+  }
 
-    async destination(image:string) : Promise<any> {
-        try {
-            return await cloudinary.uploader.upload(`src/uploads/${image}`)
-        } catch (error) {
-            throw error
-        }
+  async destination(image: string): Promise<any> {
+    try {
+      return await cloudinary.uploader.upload(process.env.KEY_DEST + image, { folder: "threads-app" });
+    } catch (error) {
+      throw error;
     }
-}
+  }
+})();
