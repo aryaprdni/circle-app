@@ -20,7 +20,7 @@ export default new (class ThreadWorker {
             const cloudinary = await CloudinaryConfig.destination(data.image);
             const obj = this.ThreadWorker.create({
               content: data.content,
-              image: cloudinary.secure_url,
+              image: cloudinary,
               user: {
                 id: data.user,
               },
