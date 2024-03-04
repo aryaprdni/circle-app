@@ -5,9 +5,11 @@ import * as bcrypt from "bcrypt";
 import * as jwt from "jsonwebtoken";
 import { randomInt } from "crypto";
 import { Response } from "express";
+import { Follows } from "../entities/Follows";
 
 export default new (class UserServices {
   private readonly UserRepository: Repository<User> = AppDataSource.getRepository(User);
+  private readonly FollowingRepository: Repository<Follows> = AppDataSource.getRepository(Follows);
   async Register(data: any, res: Response): Promise<object | string> {
     try {
       const checkEmail = await this.UserRepository.exists({
@@ -64,7 +66,7 @@ export default new (class UserServices {
       const comparePassword = await bcrypt.compare(data.password, checkUser.password);
       if (!comparePassword) {
         return res.status(400).json({
-          message: "Email / password is wrong!",
+          message: "Email/username and password is wrong!",
         });
       }
 
@@ -146,14 +148,51 @@ export default new (class UserServices {
     }
   }
 
-  async getAll(): Promise<object | string> {
+  async getAll(loginSession: number): Promise<object | string> {
     try {
-      const response = await this.UserRepository.find();
+      // const allUsers = await this.UserRepository.find();
+      // const userId = loginSession;
+      // const usersWithFollowingStatus = await Promise.all(
+      //   allUsers.map(async (user) => {
+      //     const userWithRelations = await this.UserRepository.findOne({
+      //       where: { id: userId },
+      //       relations: ["following"],
+      //     });
+      //     const is_following = userWithRelations?.following.some((followingUserId) => followingUserId.id === user.id);
+      //     return { ...user, is_following, userId };
+      //   })
+      // );
+      // return {
+      //   message: "Get all user success",
+      //   data: usersWithFollowingStatus,
+      // };
+      const allUsers = await this.UserRepository.find();
+      const userId = loginSession;
+      return await Promise.all(
+        allUsers.map(async (data) => {
+          const isFollowed = await this.FollowingRepository.count({
+            where: {
+              follower: {
+                id: userId,
+              },
+              following: {
+                id: data.id,
+              },
+            },
+          });
 
-      return {
-        message: "Get all user success",
-        data: response,
-      };
+          return {
+            id: data.id,
+            username: data.username,
+            full_name: data.full_name,
+            email: data.email,
+            photo_profile: data.photo_profile,
+            bio: data.bio,
+            userId: data.id,
+            is_following: isFollowed > 0,
+          };
+        })
+      );
     } catch (error) {
       return {
         message: "Get all user failed",

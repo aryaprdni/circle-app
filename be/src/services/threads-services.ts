@@ -6,20 +6,20 @@ import { Likes } from "../entities/Likes";
 export default new (class ThreadsService {
   private readonly ThreadsRepository: Repository<Threads> = AppDataSource.getRepository(Threads);
   private readonly LikesRepository: Repository<Likes> = AppDataSource.getRepository(Likes);
-  async create(data: any): Promise<object | string> {
-    try {
-      const response = await this.ThreadsRepository.save(data);
-      return {
-        message: "Create threads success",
-        data: response,
-      };
-    } catch (error) {
-      return {
-        message: "Create threads failed",
-        error: error.message,
-      };
-    }
-  }
+  // async create(data: any): Promise<object | string> {
+  //   try {
+  //     const response = await this.ThreadsRepository.save(data);
+  //     return {
+  //       message: "Create threads success",
+  //       data: response,
+  //     };
+  //   } catch (error) {
+  //     return {
+  //       message: "Create threads failed",
+  //       error: error.message,
+  //     };
+  //   }
+  // }
 
   async update(id: number, data: Threads): Promise<object | string> {
     try {

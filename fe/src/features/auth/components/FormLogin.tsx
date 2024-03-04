@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 
 const FormLogin = () => {
   const { handleChange, handleLogin } = useLogin();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const auth = useSelector((state: RootState) => state.auth);
   const navigate = useNavigate();
   return (
@@ -46,6 +47,3 @@ const FormLogin = () => {
 };
 
 export default FormLogin;
-function useNagivate() {
-  throw new Error("Function not implemented.");
-}

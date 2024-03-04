@@ -1,4 +1,5 @@
 export interface IAuth {
+  userId: number;
   id: number;
   username: string;
   full_name: string;
@@ -28,6 +29,8 @@ export interface IUserSearch {
   full_name: string;
   bio: string;
   profile_picture?: string;
+  userId: number,
+  is_following: boolean
 }
 
 export interface IEditProfile {

@@ -37,7 +37,7 @@ const PageFollows = () => {
           </TabPanel>
           <TabPanel>
             {follows
-              .filter((follow: IFollow) => follow.is_following) // Filter out users who are not being followed
+              .filter((follow: IFollow) => follow.is_following)
               .map((follow: IFollow, index: number) => (
                 <Flex key={index} gap={5} mb={5} alignItems={"center"}>
                   <Avatar size="md" src={follow.profile_picture} />

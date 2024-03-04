@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable no-useless-catch */
 import { useDispatch, useSelector } from "react-redux";
 import { API, setAuthToken } from "../../../libs/axios";
 import { GET_FOLLOWS, GET_USERS, SET_FOLLOW } from "../../../store/RootReducer";
@@ -13,24 +15,10 @@ export default function useFollows() {
   const follows = useSelector((state: RootState) => state.follow.follows);
   const dispatch = useDispatch();
 
-  // SUGGESTEDFOLLOWING
-  async function getSuggestedFollowing() {
-    try {
-      const response = await API.get("/users");
-      // console.log("response", response);
-      // console.log("Before dispatch:", users);
-      const filteredUsers = response.data.data.filter((user: IUserSearch) => user.id !== auth?.data.id);
-      dispatch(GET_USERS(filteredUsers));
-      // console.log("After dispatch:", users);
-    } catch (error) {
-      throw error;
-    }
-  }
-
   // PAGE FOLLOW
   async function getFollowData() {
     const response = await API.get(`/follow?type=${followState}`);
-    // console.log("response", response);
+    console.log("Follows data from API:", response.data);
     dispatch(GET_FOLLOWS(response.data));
   }
 
@@ -57,8 +45,8 @@ export default function useFollows() {
 
   useEffect(() => {
     getFollowData();
-    getSuggestedFollowing();
-  }, []);
+    // getSuggestedFollowing();
+  }, [followState]);
 
   return {
     users,

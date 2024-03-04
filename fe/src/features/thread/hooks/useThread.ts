@@ -33,6 +33,12 @@ export function useThreads() {
       const response = await API.post("/threads", formData);
       console.log("test", response.data);
       dispatch(POST_THREAD(response.data));
+
+      setData({
+        content: "",
+        image: "",
+      });
+      
       await getThreads();
     } catch (error) {
       console.error("Error posting thread:", error);
@@ -65,28 +71,9 @@ export function useThreads() {
     }
   }
 
-  // async function handleLike(id: number, isLiked: boolean) {
-  //   try {
-  //     console.log("Before API call - id:", id, "isLiked:", isLiked);
-  //     localStorage.setItem(`isLiked_${id}`, isLiked.toString());
-  //     if (!isLiked) {
-  //       const response = await API.post("/like", { threadsId: id });
-  //       console.log("API Response - isLiked:", response.data, "id:", id);
-  //     } else {
-  //       await API.delete(`/like/${id}`);
-  //       // console.log("Berhasil menghapus like", response.data);
-  //     }
-  //     console.log("After API call - id:", id, "isLiked:", isLiked);
-  //     dispatch(SET_THREAD_LIKE({ id: id, isLiked: isLiked }));
-  //   } catch (error) {
-  //     console.error("Error handling like:", error);
-  //     throw error;
-  //   }
-  // }
-
   useEffect(() => {
     getThreads();
-  }, []);
+  }, [dispatch]);
 
   return {
     threads,

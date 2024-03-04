@@ -1,6 +1,5 @@
-import { Box, Button, Flex, Image, Input, Spacer, Text } from "@chakra-ui/react";
+import { Box, Button, Flex, Input, Spacer, Text, Avatar, Image } from "@chakra-ui/react";
 import { BiSolidCommentDetail } from "react-icons/bi";
-// import { LuImagePlus } from "react-icons/lu";
 import { useReplies } from "../features/thread/hooks/useReplies";
 import { FaHeart } from "react-icons/fa";
 import { useLike } from "../features/thread/hooks/useLike";
@@ -16,7 +15,7 @@ const Detail = () => {
       <Box bgColor="#1d1d1d" color="white" borderY={"1px solid grey"} m="0 auto" p="10px" w="100%">
         <Flex mb="15px" ml="6%">
           <Box mr="18px">
-            <Image src={threadDetail?.user?.photo_profile} borderRadius="full" boxSize="40px" objectFit="cover" />
+            <Avatar src={threadDetail?.user?.photo_profile} borderRadius="full" boxSize="40px" objectFit="cover" />
           </Box>
 
           <Box>
@@ -55,7 +54,7 @@ const Detail = () => {
       </Box>
 
       <Flex alignItems={"center"} p={"15px 35px"} borderBottom={"1px solid grey"} w={"100%"}>
-        <Image src={threadDetail?.user?.photo_profile} borderRadius="full" boxSize="40px" objectFit="cover" mr="10px" />
+        <Avatar src={threadDetail?.user?.photo_profile} borderRadius="full" boxSize="40px" objectFit="cover" mr="10px" />
         <form onSubmit={HandlePostReply} encType="multipart/form-data">
           <Flex alignItems={"center"}>
             <Input name="image" id="image-upload" type="file" accept="image/*" style={{ display: "none" }} ref={fileInputRef} onChange={handleChange} />
@@ -80,7 +79,7 @@ const Detail = () => {
             <Box bgColor="#1d1d1d" color="white" borderY={"1px solid grey"} m="0 auto" p="10px" w="100%" key={index}>
               <Flex mb="15px" ml="6%">
                 <Box mr="18px">
-                  <Image src={replies?.user?.photo_profile} borderRadius="full" boxSize="40px" objectFit="cover" />
+                  <Avatar src={replies?.user?.photo_profile} borderRadius="full" boxSize="40px" objectFit="cover" />
                 </Box>
 
                 <Box>

@@ -5,21 +5,21 @@ import { AppDataSource } from "../data-source";
 export default new (class RepliesService {
   private readonly RepliesRepository: Repository<Replies> = AppDataSource.getRepository(Replies);
 
-  async create(data: any): Promise<object | string> {
-    try {
-      const response = await this.RepliesRepository.save(data);
+  // async create(data: any): Promise<object | string> {
+  //   try {
+  //     const response = await this.RepliesRepository.save(data);
 
-      return {
-        message: "Create replies success",
-        data: response,
-      };
-    } catch (error) {
-      return {
-        message: "Create replies failed",
-        error: error.message,
-      };
-    }
-  }
+  //     return {
+  //       message: "Create replies success",
+  //       data: response,
+  //     };
+  //   } catch (error) {
+  //     return {
+  //       message: "Create replies failed",
+  //       error: error.message,
+  //     };
+  //   }
+  // }
 
   async update(id: number, data: Replies): Promise<object | string> {
     try {

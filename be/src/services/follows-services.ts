@@ -3,7 +3,6 @@ import { Follows } from "../entities/Follows";
 import { AppDataSource } from "../data-source";
 import { Request, Response } from "express";
 import { User } from "../entities/User";
-import { describe } from "node:test";
 
 export default new (class FollowsService {
   private readonly FollowsRepository: Repository<Follows> = AppDataSource.getRepository(Follows);

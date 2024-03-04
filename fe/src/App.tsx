@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-catch */
 import { useEffect } from "react";
 import { Routes, Route, Navigate, Outlet, useNavigate } from "react-router-dom";
 import Register from "./pages/Register";

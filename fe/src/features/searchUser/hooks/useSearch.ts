@@ -1,6 +1,8 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../store/types/RootState";
-import { GET_USERS } from "../../../store/RootReducer";
+import { GET_USERS, SET_FOLLOW } from "../../../store/RootReducer";
 import { API, setAuthToken } from "../../../libs/axios";
 import { ChangeEvent, useEffect, useState } from "react";
 import { IUserSearch } from "../../../interface/IAuth";
@@ -32,9 +34,38 @@ export function useSearchUsers() {
   async function getSearchUsers() {
     try {
       const response = await API.get("/users");
-      dispatch(GET_USERS(response.data.data));
+      dispatch(GET_USERS(response.data));
+      // console.log("get all users: ", response);
     } catch (error) {
       console.error("Error fetching search users:", error);
+    }
+  }
+
+  async function handleFollow(id: number, followingUserId: number, is_following: boolean) {
+    try {
+      dispatch(SET_FOLLOW({ id: id, is_following: !is_following }));
+      if (!is_following) {
+        const response = await API.post(`/follow`, {
+          followingUserId: followingUserId,
+        });
+        // console.log("berhasil follow!", response.data);
+      } else {
+        const response = await API.delete(`/follow/${followingUserId}`);
+        // console.log("berhasil unfollow!", response.data);
+      }
+
+      const updatedResults = filteredResults.map((user) => {
+        if (user.id === followingUserId) {
+          return { ...user, is_following: !is_following };
+        }
+        return user;
+      });
+
+      setFilteredResults(updatedResults);
+    } catch (error) {
+      // console.error("error", error);
+      dispatch(SET_FOLLOW({ id: id, is_following: is_following }));
+      throw error;
     }
   }
 
@@ -47,5 +78,6 @@ export function useSearchUsers() {
     searchUsers,
     handleSearch,
     filteredResults,
+    handleFollow,
   };
 }

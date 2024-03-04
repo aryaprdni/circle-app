@@ -20,7 +20,7 @@ export default new (class ThreadQueue {
         user: userId,
       };
 
-      const errorQueue = await RabbitMQConfig.sendToMessage(process.env.QUEUE_NAME, payload);
+      const errorQueue = await RabbitMQConfig.sendToMessage(process.env.THREAD_QUEUE, payload);
       if (errorQueue) return res.status(500).json({ message: errorQueue });
 
       return res.status(201).json({

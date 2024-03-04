@@ -1,4 +1,4 @@
-import { Box, Image, Text, Flex } from "@chakra-ui/react";
+import { Box, Image, Text, Flex, Avatar } from "@chakra-ui/react";
 import { BiSolidCommentDetail } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
 import { ThreadInterface } from "../../../interface/IThread";
@@ -18,7 +18,7 @@ const ContentThead = () => {
           <Box key={index} bgColor="#1d1d1d" color="white" borderY={"1px solid grey"} m="0 auto" p="10px" w="100%">
             <Flex mb="15px" ml="6%">
               <Box mr="18px">
-                <Image src={thread.user?.photo_profile} borderRadius="full" boxSize="40px" objectFit="cover" />
+                <Avatar src={thread.user?.photo_profile} borderRadius="full" boxSize="40px" objectFit="cover" />
               </Box>
 
               <Box>

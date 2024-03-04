@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Box, Button, Card, Container, Flex, FormControl, Heading, Input, Text } from "@chakra-ui/react";
 import { useRegister } from "../hooks/useRegister";
 import { useNavigate } from "react-router-dom";
@@ -31,7 +32,7 @@ const Register = () => {
 
           <Flex fontSize={15} mt={1} gap="2px">
             <Text>Already have an account?</Text>
-            <Text color={"green"} textDecoration={"underline"}>
+            <Text color={"green"} textDecoration={"underline"} onClick={() => navigate("/login")}>
               Login
             </Text>
           </Flex>

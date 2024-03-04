@@ -27,7 +27,7 @@ export default new (class UserControllers {
     try {
       const data = req.body;
       const { error } = loginValidation.validate(data);
-      if (error) return res.status(400).json(error.details[0].message);
+      if (error) return res.status(400).json(error.details[0]);
 
       const response = await userServices.Login(data, res);
       return res.status(200).json(response);
@@ -82,7 +82,8 @@ export default new (class UserControllers {
 
   async getAll(req: Request, res: Response) {
     try {
-      const response = await userServices.getAll();
+      const loginSession = res.locals.loginSession.id;
+      const response = await userServices.getAll(loginSession);
       return res.status(200).json(response);
     } catch (error) {
       return res.status(500).json({
