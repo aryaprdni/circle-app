@@ -1,6 +1,7 @@
 import { Replies } from "./../entities/Replies";
 import { Repository } from "typeorm";
 import { AppDataSource } from "../data-source";
+import { redisClient } from "../libs/redis";
 
 export default new (class RepliesService {
   private readonly RepliesRepository: Repository<Replies> = AppDataSource.getRepository(Replies);
@@ -55,31 +56,40 @@ export default new (class RepliesService {
     try {
       const threadId = parseInt(reqQuery.thread_id ?? 0);
 
-      const replies = await this.RepliesRepository.find({
-        relations: ["user", "threads"],
-        where: {
-          threads: {
-            id: threadId,
+      let data = await redisClient.get("replies");
+      if (!data) {
+        const replies = await this.RepliesRepository.find({
+          relations: ["user", "threads"],
+          where: {
+            threads: {
+              id: threadId,
+            },
           },
-        },
-        order: {
-          id: "DESC",
-        },
-        select: {
-          user: {
-            id: true,
-            username: true,
-            full_name: true,
+          order: {
+            id: "DESC",
           },
-          threads: {
-            id: true,
-            content: true,
-            image: true,
+          select: {
+            user: {
+              id: true,
+              username: true,
+              full_name: true,
+            },
+            threads: {
+              id: true,
+              content: true,
+              image: true,
+            },
           },
-        },
-      });
+        });
+        const stringDataDB = JSON.stringify(replies);
+        data = stringDataDB;
+        await redisClient.set("replies", stringDataDB);
+      }
 
-      return replies;
+      return {
+        message: "Get all replies",
+        data: JSON.parse(data),
+      };
     } catch (error) {
       throw new Error(error.message);
     }
