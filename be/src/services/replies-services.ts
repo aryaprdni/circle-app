@@ -85,7 +85,7 @@ export default new (class RepliesService {
         data = stringDataDB;
         await redisClient.set("replies", stringDataDB);
       }
-
+      console.log(data);
       return {
         message: "Get all replies",
         data: JSON.parse(data),

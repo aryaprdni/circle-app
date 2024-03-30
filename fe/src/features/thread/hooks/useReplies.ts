@@ -30,6 +30,7 @@ export function useReplies() {
   async function getReplies() {
     try {
       const response = await API.get(`/replies?thread_id=${id}`);
+      console.log(response);
       dispatch(GET_REPLIES(response.data));
     } catch (error) {
       console.log("Error getting one thread :", error);

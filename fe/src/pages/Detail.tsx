@@ -9,6 +9,7 @@ import { LuImagePlus } from "react-icons/lu";
 const Detail = () => {
   const { threadDetail, replies, handleChange, HandlePostReply, fileInputRef } = useReplies();
   const { handleLike } = useLike();
+  console.log(replies);
 
   return (
     <>

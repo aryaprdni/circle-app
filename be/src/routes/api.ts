@@ -43,26 +43,23 @@ router.get("/follow", authMiddleware.Auth, followsControllers.find);
 router.delete("/follow/:followerUserId", authMiddleware.Auth, followsControllers.delete);
 // router.get("/follows/:id", authMiddleware.Auth, followsControllers.getById);
 
+// NOTIFICATION SSE
+router.get("/notification", (req: express.Request, res: express.Response) => {
+  res.setHeader("Content-Type", "text/event-stream");
+  res.setHeader("Cache-Control", "no-cache");
+  res.setHeader("Connection", "keep-alive");
 
-// NOTIFICATION SSE 
-// router.get("/notification", (req: express.Request, res: express.Response) => {
-//     res.setHeader("Content-Type", "text/event-stream")
-//     res.setHeader("Cache-Control", "no-cache")
-//     res.setHeader("Connection", "keep-alive")
-  
-//     res.write("event: message\n")
-//     function sendNotification(data: any) {
-//         res.write("data: " + JSON.stringify(data) + "\n\n");
-//     }
-  
-  
-//     router.get("/new-thread", (req, res) => {
-//       const thread = JSON.stringify({ data: "New Thread!" })
-//       sendNotification(thread)
-  
-//       res.sendStatus(200)
-//     })
-    
-//   })
+  res.write("event: message\n");
+  function sendNotification(data: any) {
+    res.write("data: " + JSON.stringify(data) + "\n\n");
+  }
+
+  router.get("/new-thread", (req, res) => {
+    const thread = JSON.stringify({ data: "New Thread!" });
+    sendNotification(thread);
+
+    res.sendStatus(200);
+  });
+});
 
 export default router;

@@ -1,4 +1,3 @@
-// View component
 import { Box, Grid, GridItem } from "@chakra-ui/react";
 import MenuBar from "../components/MenuBar";
 import Profile from "../components/Profile";

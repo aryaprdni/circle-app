@@ -12,10 +12,57 @@ import { API, setAuthToken } from "./libs/axios";
 import { useDispatch } from "react-redux";
 import { AUTH_CHECK } from "./store/RootReducer";
 import Main from "./layouts";
+import { toast } from "react-toastify";
 
 const App = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  async function testNotification() {
+    toast.info(
+      <p>
+        New threads are available! <a href="/">Check it out!</a>
+      </p>,
+      {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      }
+    );
+  }
+
+  useEffect(() => {
+    const sse = new EventSource("http://localhost:3000/api/v1/notification");
+
+    async function getRealtimeData(data: any) {
+      if (!data) {
+        console.error("Null pointer exception: data is null or undefined");
+        return;
+      }
+      try {
+        console.log("Ini datanya cuy:", data);
+        testNotification();
+      } catch (error) {
+        console.error("Unhandled exception in getRealtimeData:", error);
+      }
+    }
+
+    sse.onopen = (e) => console.log("berhasil connect ! : ", e);
+    sse.onmessage = (e) => getRealtimeData(JSON.parse(e.data));
+    sse.onerror = () => {
+      console.log("Error SSE bro!");
+      sse.close();
+    };
+
+    return () => {
+      sse.close();
+    };
+  }, []);
 
   async function checkAuth() {
     try {
