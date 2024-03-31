@@ -1,7 +1,11 @@
 export interface ThreadInterface {
   id: number;
   user: {
+<<<<<<< HEAD
     profile_picture: string;
+=======
+    photo_profile: string;
+>>>>>>> b5127b8b97cf4c801f56f21d4b5279ad2c2e7070
     full_name: string;
     username: string;
   };
@@ -36,4 +40,7 @@ export type IReplies = {
   image?: string;
   likes_count: number;
 };
+<<<<<<< HEAD
 
+=======
+>>>>>>> b5127b8b97cf4c801f56f21d4b5279ad2c2e7070

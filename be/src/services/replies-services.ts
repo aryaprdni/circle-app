@@ -54,6 +54,7 @@ export default new (class RepliesService {
 
   async getAll(reqQuery: any): Promise<any> {
     try {
+<<<<<<< HEAD
       const threadId = parseInt(reqQuery.thread_id ?? "");
       if (isNaN(threadId)) {
         throw new Error("Thread ID is not a number");
@@ -62,6 +63,11 @@ export default new (class RepliesService {
       const cacheKey = `replies?thread_id=${threadId}`;
       let data = await redisClient.get(cacheKey);
 
+=======
+      const threadId = parseInt(reqQuery.thread_id ?? 0);
+
+      let data = await redisClient.get("replies");
+>>>>>>> b5127b8b97cf4c801f56f21d4b5279ad2c2e7070
       if (!data) {
         const replies = await this.RepliesRepository.find({
           relations: ["user", "threads"],
@@ -84,6 +90,7 @@ export default new (class RepliesService {
               content: true,
               image: true,
             },
+<<<<<<< HEAD
             id: true,
             content: true,
             image: true,
@@ -110,6 +117,21 @@ export default new (class RepliesService {
     } catch (error) {
       console.error("Error in getAll:", error);
       throw new Error("Internal server error");
+=======
+          },
+        });
+        const stringDataDB = JSON.stringify(replies);
+        data = stringDataDB;
+        await redisClient.set("replies", stringDataDB);
+      }
+      console.log(data);
+      return {
+        message: "Get all replies",
+        data: JSON.parse(data),
+      };
+    } catch (error) {
+      throw new Error(error.message);
+>>>>>>> b5127b8b97cf4c801f56f21d4b5279ad2c2e7070
     }
   }
 
@@ -124,7 +146,11 @@ export default new (class RepliesService {
           user: {
             full_name: true,
             username: true,
+<<<<<<< HEAD
             profile_picture: true,
+=======
+            photo_profile: true,
+>>>>>>> b5127b8b97cf4c801f56f21d4b5279ad2c2e7070
           },
           threads: {
             id: true,

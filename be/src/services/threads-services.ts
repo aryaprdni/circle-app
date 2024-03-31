@@ -70,7 +70,11 @@ export default new (class ThreadsService {
             id: true,
             username: true,
             full_name: true,
+<<<<<<< HEAD
             profile_picture: true,
+=======
+            photo_profile: true,
+>>>>>>> b5127b8b97cf4c801f56f21d4b5279ad2c2e7070
           },
         },
       });
@@ -104,7 +108,11 @@ export default new (class ThreadsService {
           id: data.user.id,
           username: data.user.username,
           full_name: data.user.full_name,
+<<<<<<< HEAD
           profile_picture: data.user.profile_picture,
+=======
+          photo_profile: data.user.photo_profile,
+>>>>>>> b5127b8b97cf4c801f56f21d4b5279ad2c2e7070
         },
         isLiked: like.some((likeData) => likeData.threads.id === data.id),
       }));
@@ -124,7 +132,11 @@ export default new (class ThreadsService {
           user: {
             username: true,
             full_name: true,
+<<<<<<< HEAD
             profile_picture: true,
+=======
+            photo_profile: true,
+>>>>>>> b5127b8b97cf4c801f56f21d4b5279ad2c2e7070
           },
         },
       });
@@ -158,7 +170,11 @@ export default new (class ThreadsService {
           id: response.user.id,
           username: response.user.username,
           full_name: response.user.full_name,
+<<<<<<< HEAD
           profile_picture: response.user.profile_picture,
+=======
+          photo_profile: response.user.photo_profile,
+>>>>>>> b5127b8b97cf4c801f56f21d4b5279ad2c2e7070
         },
         isLiked: like.some((likeData) => likeData.threads.id === response.id),
       };

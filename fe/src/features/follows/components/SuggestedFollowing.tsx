@@ -8,7 +8,11 @@ import { useSuggestedFollowing } from "../hooks/useSuggestedFollowing";
 
 const SuggestedFollowing = () => {
   const { users, handleFollow } = useSuggestedFollowing();
+<<<<<<< HEAD
   // console.log("data", users);
+=======
+  console.log("data", users);
+>>>>>>> b5127b8b97cf4c801f56f21d4b5279ad2c2e7070
   return (
     <>
       <Card

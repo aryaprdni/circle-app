@@ -77,9 +77,13 @@ const uploadFile = (fieldName: string) => {
 
   return (req: Request, res: Response, next: NextFunction) => {
     uploadFile.single(fieldName)(req, res, function (error: any) {
+<<<<<<< HEAD
       // console.log("Received field:", req.body);
       if (error instanceof multer.MulterError) {
         console.log("Multer Error:", error);
+=======
+      if (error instanceof multer.MulterError) {
+>>>>>>> b5127b8b97cf4c801f56f21d4b5279ad2c2e7070
         return res.status(400).json({ error: error.message });
       } else if (error) {
         return res.status(500).json({ error: "Internal server error" });

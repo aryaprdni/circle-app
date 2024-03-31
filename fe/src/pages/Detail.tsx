@@ -9,7 +9,11 @@ import { LuImagePlus } from "react-icons/lu";
 const Detail = () => {
   const { threadDetail, replies, handleChange, HandlePostReply, fileInputRef } = useReplies();
   const { handleLike } = useLike();
+<<<<<<< HEAD
   console.log("replies", replies);
+=======
+  console.log(replies);
+>>>>>>> b5127b8b97cf4c801f56f21d4b5279ad2c2e7070
 
   return (
     <>
@@ -75,7 +79,11 @@ const Detail = () => {
         </form>
       </Flex>
       <Box>
+<<<<<<< HEAD
         {replies?.replies?.data?.map((replies: IReplies, index: number) => {
+=======
+        {replies?.replies?.map((replies: IReplies, index: number) => {
+>>>>>>> b5127b8b97cf4c801f56f21d4b5279ad2c2e7070
           return (
             <Box bgColor="#1d1d1d" color="white" borderY={"1px solid grey"} m="0 auto" p="10px" w="100%" key={index}>
               <Flex mb="15px" ml="6%">

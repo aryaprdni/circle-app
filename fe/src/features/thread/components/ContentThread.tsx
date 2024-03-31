@@ -9,7 +9,10 @@ import { useLike } from "../hooks/useLike";
 const ContentThead = () => {
   const navigate = useNavigate();
   const { threads } = useThreads();
+<<<<<<< HEAD
   console.log("threads", threads);
+=======
+>>>>>>> b5127b8b97cf4c801f56f21d4b5279ad2c2e7070
   const { handleLike } = useLike();
 
   return (
@@ -19,7 +22,11 @@ const ContentThead = () => {
           <Box key={index} bgColor="#1d1d1d" color="white" borderY={"1px solid grey"} m="0 auto" p="10px" w="100%">
             <Flex mb="15px" ml="6%">
               <Box mr="18px">
+<<<<<<< HEAD
                 <Avatar src={thread.user?.profile_picture} borderRadius="full" boxSize="40px" objectFit="cover" />
+=======
+                <Avatar src={thread.user?.photo_profile} borderRadius="full" boxSize="40px" objectFit="cover" />
+>>>>>>> b5127b8b97cf4c801f56f21d4b5279ad2c2e7070
               </Box>
 
               <Box>

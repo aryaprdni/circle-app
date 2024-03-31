@@ -1,5 +1,8 @@
+<<<<<<< HEAD
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
+=======
+>>>>>>> b5127b8b97cf4c801f56f21d4b5279ad2c2e7070
 import { useParams } from "react-router-dom";
 import { API, setAuthToken } from "../../../libs/axios";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
@@ -32,7 +35,11 @@ export function useReplies() {
   async function getReplies() {
     try {
       const response = await API.get(`/replies?thread_id=${id}`);
+<<<<<<< HEAD
       console.log("getReplies", response.data);
+=======
+      console.log(response);
+>>>>>>> b5127b8b97cf4c801f56f21d4b5279ad2c2e7070
       dispatch(GET_REPLIES(response.data));
     } catch (error) {
       console.log("Error getting one thread :", error);
@@ -82,7 +89,11 @@ export function useReplies() {
   useEffect(() => {
     getThreadById();
     getReplies();
+<<<<<<< HEAD
   }, [getThreadById]);
+=======
+  }, [dispatch]);
+>>>>>>> b5127b8b97cf4c801f56f21d4b5279ad2c2e7070
 
   return {
     threadDetail,

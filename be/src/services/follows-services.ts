@@ -107,8 +107,13 @@ export default new (class FollowsService {
           username: follow.following.username,
           full_name: follow.following.full_name,
           email: follow.following.email,
+<<<<<<< HEAD
           profile_picture: follow.following.profile_picture,
           profile_description: follow.following.profile_description,
+=======
+          photo_profile: follow.following.photo_profile,
+          photo_background: follow.following.photo_background,
+>>>>>>> b5127b8b97cf4c801f56f21d4b5279ad2c2e7070
           bio: follow.following.bio,
           is_following: true,
         }));
@@ -142,8 +147,13 @@ export default new (class FollowsService {
               username: follow.follower.username,
               full_name: follow.follower.full_name,
               email: follow.follower.email,
+<<<<<<< HEAD
               profile_picture: follow.follower.profile_picture,
               profile_description: follow.follower.profile_description,
+=======
+              photo_profile: follow.follower.photo_profile,
+              photo_background: follow.follower.photo_background,
+>>>>>>> b5127b8b97cf4c801f56f21d4b5279ad2c2e7070
               bio: follow.follower.bio,
               is_following: isFollowed > 0,
             };

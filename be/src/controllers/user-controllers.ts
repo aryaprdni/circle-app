@@ -42,8 +42,11 @@ export default new (class UserControllers {
     }
   }
 
+<<<<<<< HEAD
   
   
+=======
+>>>>>>> b5127b8b97cf4c801f56f21d4b5279ad2c2e7070
   async Update(req: Request, res: Response) {
     try {
       const userId = res.locals.loginSession.id;
@@ -55,6 +58,7 @@ export default new (class UserControllers {
         profile_picture: req.file ? res.locals.filename : null,
         profile_description: req.file ? res.locals.filename : null,
       };
+<<<<<<< HEAD
   
       const { error, value } = updateValidation.validate(data);
       if (error) return res.status(400).json({ error: error.details[0].message });
@@ -76,20 +80,42 @@ export default new (class UserControllers {
       console.log("obj", obj);
   
       const response = await userServices.Update(obj, res);
+=======
+
+      const { error, value } = updateValidation.validate(data);
+      if (error) return res.status(400).json(error);
+
+      if (req.file) {
+        const cloudinaryResProfilePic = await cloudinary.destination(value.profile_picture);
+        value.profile_picture = cloudinaryResProfilePic.secure_url;
+
+        const cloudinaryResProfileDesc = await cloudinary.destination(value.profile_description);
+        value.profile_description = cloudinaryResProfileDesc.secure_url;
+      }
+
+      const response = await userServices.Update(data, res);
+>>>>>>> b5127b8b97cf4c801f56f21d4b5279ad2c2e7070
       return res.status(201).json(response);
     } catch (error) {
       console.error("Caught an error:", error);
       if (res.headersSent) {
         return;
       }
+<<<<<<< HEAD
   
+=======
+
+>>>>>>> b5127b8b97cf4c801f56f21d4b5279ad2c2e7070
       return res.status(500).json({
         message: "Internal server error",
         error: error.message,
       });
     }
   }
+<<<<<<< HEAD
   
+=======
+>>>>>>> b5127b8b97cf4c801f56f21d4b5279ad2c2e7070
 
   async getAll(req: Request, res: Response) {
     try {

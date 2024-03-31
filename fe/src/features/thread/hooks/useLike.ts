@@ -16,8 +16,11 @@ export function useLike() {
         await API.delete(`/like/${id}`);
         // console.log("Berhasil menghapus like", response.data);
       }
+<<<<<<< HEAD
 
       
+=======
+>>>>>>> b5127b8b97cf4c801f56f21d4b5279ad2c2e7070
       dispatch(SET_THREAD_LIKE({ id: id, isLiked: isLiked }));
     } catch (error) {
       console.error("Error handling like:", error);
