@@ -7,20 +7,16 @@ import { IReplies } from "../interface/IThread";
 import { LuImagePlus } from "react-icons/lu";
 
 const Detail = () => {
-  const { threadDetail, replies, handleChange, HandlePostReply, fileInputRef } = useReplies();
+  const { threadDetail, replies, handleChange, HandlePostReply, fileInputRef, data } = useReplies();
   const { handleLike } = useLike();
-<<<<<<< HEAD
   console.log("replies", replies);
-=======
-  console.log(replies);
->>>>>>> b5127b8b97cf4c801f56f21d4b5279ad2c2e7070
 
   return (
     <>
       <Box bgColor="#1d1d1d" color="white" borderY={"1px solid grey"} m="0 auto" p="10px" w="100%">
         <Flex mb="15px" ml="6%">
           <Box mr="18px">
-            <Avatar src={threadDetail?.user?.photo_profile} borderRadius="full" boxSize="40px" objectFit="cover" />
+            <Avatar src={threadDetail?.user.profile_picture} borderRadius="full" boxSize="40px" objectFit="cover" />
           </Box>
 
           <Box>
@@ -59,12 +55,12 @@ const Detail = () => {
       </Box>
 
       <Flex alignItems={"center"} p={"15px 35px"} borderBottom={"1px solid grey"} w={"100%"}>
-        <Avatar src={threadDetail?.user?.photo_profile} borderRadius="full" boxSize="40px" objectFit="cover" mr="10px" />
+        <Avatar src={threadDetail?.user?.profile_picture} borderRadius="full" boxSize="40px" objectFit="cover" mr="10px" />
         <form onSubmit={HandlePostReply} encType="multipart/form-data">
           <Flex alignItems={"center"}>
             <Input name="image" id="image-upload" type="file" accept="image/*" style={{ display: "none" }} ref={fileInputRef} onChange={handleChange} />
 
-            <Input w={"400px"} m={"0 10px 0 10px"} variant={"unstyled"} color="white" placeholder="Type your reply!" id="content" name="content" onChange={handleChange} />
+            <Input w={"400px"} m={"0 10px 0 10px"} variant={"unstyled"} color="white" placeholder="Type your reply!" id="content" name="content" onChange={handleChange} value={data.content} />
 
             <Spacer />
 
@@ -79,16 +75,12 @@ const Detail = () => {
         </form>
       </Flex>
       <Box>
-<<<<<<< HEAD
         {replies?.replies?.data?.map((replies: IReplies, index: number) => {
-=======
-        {replies?.replies?.map((replies: IReplies, index: number) => {
->>>>>>> b5127b8b97cf4c801f56f21d4b5279ad2c2e7070
           return (
             <Box bgColor="#1d1d1d" color="white" borderY={"1px solid grey"} m="0 auto" p="10px" w="100%" key={index}>
               <Flex mb="15px" ml="6%">
                 <Box mr="18px">
-                  <Avatar src={replies?.user?.photo_profile} borderRadius="full" boxSize="40px" objectFit="cover" />
+                  <Avatar src={replies?.user?.profile_picture} borderRadius="full" boxSize="40px" objectFit="cover" />
                 </Box>
 
                 <Box>
@@ -108,18 +100,18 @@ const Detail = () => {
                       {replies?.image && <Image src={replies?.image} width="300px" height="300px" />}
                     </Box>
                     <Flex mt="10px" alignItems="center" gap="10px" color="grey">
-                      <Flex alignItems="center" gap="10px">
+                      {/* <Flex alignItems="center" gap="10px">
                         <Text>
                           <FaHeart />
                         </Text>
                         <Text>{replies.likes_count}</Text>
-                      </Flex>
-                      <Flex alignItems="center" cursor={"pointer"} gap="10px" color="grey">
+                      </Flex> */}
+                      {/* <Flex alignItems="center" cursor={"pointer"} gap="10px" color="grey">
                         <Text>
                           <BiSolidCommentDetail />
                         </Text>
                         <Text>Replies</Text>
-                      </Flex>
+                      </Flex> */}
                     </Flex>
                   </Box>
                 </Box>

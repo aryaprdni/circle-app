@@ -6,20 +6,20 @@ import { Likes } from "../entities/Likes";
 export default new (class ThreadsService {
   private readonly ThreadsRepository: Repository<Threads> = AppDataSource.getRepository(Threads);
   private readonly LikesRepository: Repository<Likes> = AppDataSource.getRepository(Likes);
-  // async create(data: any): Promise<object | string> {
-  //   try {
-  //     const response = await this.ThreadsRepository.save(data);
-  //     return {
-  //       message: "Create threads success",
-  //       data: response,
-  //     };
-  //   } catch (error) {
-  //     return {
-  //       message: "Create threads failed",
-  //       error: error.message,
-  //     };
-  //   }
-  // }
+  async create(data: any): Promise<object | string> {
+    try {
+      const response = await this.ThreadsRepository.save(data);
+      return {
+        message: "Create threads success",
+        data: response,
+      };
+    } catch (error) {
+      return {
+        message: "Create threads failed",
+        error: error.message,
+      };
+    }
+  }
 
   async update(id: number, data: Threads): Promise<object | string> {
     try {
@@ -70,11 +70,7 @@ export default new (class ThreadsService {
             id: true,
             username: true,
             full_name: true,
-<<<<<<< HEAD
             profile_picture: true,
-=======
-            photo_profile: true,
->>>>>>> b5127b8b97cf4c801f56f21d4b5279ad2c2e7070
           },
         },
       });
@@ -108,11 +104,7 @@ export default new (class ThreadsService {
           id: data.user.id,
           username: data.user.username,
           full_name: data.user.full_name,
-<<<<<<< HEAD
           profile_picture: data.user.profile_picture,
-=======
-          photo_profile: data.user.photo_profile,
->>>>>>> b5127b8b97cf4c801f56f21d4b5279ad2c2e7070
         },
         isLiked: like.some((likeData) => likeData.threads.id === data.id),
       }));
@@ -132,11 +124,7 @@ export default new (class ThreadsService {
           user: {
             username: true,
             full_name: true,
-<<<<<<< HEAD
             profile_picture: true,
-=======
-            photo_profile: true,
->>>>>>> b5127b8b97cf4c801f56f21d4b5279ad2c2e7070
           },
         },
       });
@@ -170,11 +158,7 @@ export default new (class ThreadsService {
           id: response.user.id,
           username: response.user.username,
           full_name: response.user.full_name,
-<<<<<<< HEAD
           profile_picture: response.user.profile_picture,
-=======
-          photo_profile: response.user.photo_profile,
->>>>>>> b5127b8b97cf4c801f56f21d4b5279ad2c2e7070
         },
         isLiked: like.some((likeData) => likeData.threads.id === response.id),
       };

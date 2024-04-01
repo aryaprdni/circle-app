@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import RabbitMQConfig from "../libs/rabbitmq";
 import { createValidation } from "../utils/validator/replies-validation";
+import { redisClient } from "../libs/redis";
 
 export default new (class ReplyQueue {
   async create(req: Request, res: Response): Promise<Response> {

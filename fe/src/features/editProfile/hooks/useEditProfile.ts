@@ -1,7 +1,4 @@
-<<<<<<< HEAD
 /* eslint-disable @typescript-eslint/no-explicit-any */
-=======
->>>>>>> b5127b8b97cf4c801f56f21d4b5279ad2c2e7070
 import React, { ChangeEvent, FormEvent, useEffect } from "react";
 import { API, setAuthToken } from "../../../libs/axios";
 import { useDispatch, useSelector } from "react-redux";
@@ -14,19 +11,11 @@ export function useEditProfile() {
   const dispatch = useDispatch();
   // console.log(id);
 
-<<<<<<< HEAD
   const [form, setForm] = React.useState<Record<string, any>>({
     full_name: user.data.full_name,
     username: user.data.username,
     bio: user.data.bio,
     profile_picture: user,
-=======
-  const [form, setForm] = React.useState<any>({
-    full_name: user.data.full_name,
-    username: user.data.username,
-    bio: user.data.bio,
-    profile_picture: "",
->>>>>>> b5127b8b97cf4c801f56f21d4b5279ad2c2e7070
     profile_description: "",
   });
 
@@ -60,11 +49,7 @@ export function useEditProfile() {
       // console.log("formData", formData);
 
       const response = await API.patch(`/user/edit-profile`, formData);
-<<<<<<< HEAD
       console.log("response", response.data);
-=======
-      // console.log("response", response.data);
->>>>>>> b5127b8b97cf4c801f56f21d4b5279ad2c2e7070
       dispatch(AUTH_UPDATE(form));
     } catch (error) {
       console.log("Error edit profile :", error);

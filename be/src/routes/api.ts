@@ -7,19 +7,11 @@ import repliesControllers from "../controllers/replies-controllers";
 import likesControllers from "../controllers/likes-controllers";
 import followsControllers from "../controllers/follows-controllers";
 
-<<<<<<< HEAD
-
-=======
->>>>>>> b5127b8b97cf4c801f56f21d4b5279ad2c2e7070
 const router = express.Router();
 
 // User
 router.post("/user/register", UserControllers.Register);
-<<<<<<< HEAD
 router.patch("/user/edit-profile", authMiddleware.Auth, uploadFile("profile_picture"), UserControllers.Update);
-=======
-router.patch("/user/edit-profile", authMiddleware.Auth, uploadFile("image"), UserControllers.Update);
->>>>>>> b5127b8b97cf4c801f56f21d4b5279ad2c2e7070
 router.post("/user/login", UserControllers.login);
 router.get("/users", authMiddleware.Auth, UserControllers.getAll);
 // router.get("/user/:id", authMiddleware.Auth, UserControllers.getOne);

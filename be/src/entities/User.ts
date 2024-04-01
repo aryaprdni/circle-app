@@ -25,17 +25,10 @@ export class User {
   bio: string;
 
   @Column({ nullable: true })
-<<<<<<< HEAD
   profile_picture: string;
 
   @Column({ nullable: true })
   profile_description: string;
-=======
-  photo_profile: string;
-
-  @Column({ nullable: true })
-  photo_background: string;
->>>>>>> b5127b8b97cf4c801f56f21d4b5279ad2c2e7070
 
   @OneToMany(() => Threads, (thread) => thread.user, {
     onUpdate: "CASCADE",

@@ -5,7 +5,7 @@ import { useEditProfile } from "../hooks/useEditProfile";
 
 const EditProfile = () => {
   const user = useSelector((state: RootState) => state.auth);
-  // console.log("editprofile", user);
+  console.log("editprofile", user);
 
   const { handleEditProfile, handleChange, fileInputRef, form } = useEditProfile();
   return (

@@ -5,42 +5,43 @@ import { createValidation, updateValidation } from "../utils/validator/replies-v
 import ReplyQueue from "../queue/ReplyQueue";
 
 export default new (class RepliesController {
-  // async create(req: Request, res: Response) {
-  //   try {
-  //     const userId = res.locals.loginSession.id;
-  //     const data = {
-  //       content: req.body.content,
-  //       image: req.file ? res.locals.filename : null,
-  //     };
-
-  //     const { error, value } = createValidation.validate(data);
-  //     if (error) return res.status(400).json(error);
-
-  //     if (req.file) {
-  //       const cloudinaryRes = await cloudinary.destination(value.image);
-  //       value.image = cloudinaryRes.secure_url;
-  //     }
-
-  //     const obj = {
-  //       ...value,
-  //       user: userId,
-  //       threads: Number(req.body.threads),
-  //     };
-
-  //     const response = await repliesServices.create(obj);
-  //     return res.status(201).json(response);
-  //   } catch (error) {
-  //     console.log(error);
-  //     return res.status(500).json({
-  //       message: "Internal server error",
-  //       error: error.message,
-  //     });
-  //   }
-  // }
-
   async create(req: Request, res: Response) {
-    ReplyQueue.create(req, res);
+    try {
+      const userId = res.locals.loginSession.id;
+      const data = {
+        content: req.body.content,
+        image: req.file ? res.locals.filename : null,
+      };
+
+      const { error, value } = createValidation.validate(data);
+      if (error) return res.status(400).json(error);
+
+      let cloudinaryRes = null;
+      if (req.file) {
+        cloudinaryRes = await cloudinary.destination(value.image);
+      }
+
+      const obj = {
+        ...value,
+        user: userId,
+        threads: Number(req.body.threads),
+        image: cloudinaryRes,
+      };
+
+      const response = await repliesServices.create(obj);
+      return res.status(201).json(response);
+    } catch (error) {
+      console.log(error);
+      return res.status(500).json({
+        message: "Internal server error",
+        error: error.message,
+      });
+    }
   }
+
+  // async create(req: Request, res: Response) {
+  //   ReplyQueue.create(req, res);
+  // }
 
   async update(req: Request, res: Response) {
     try {

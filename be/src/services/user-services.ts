@@ -3,16 +3,13 @@ import { User } from "../entities/User";
 import { AppDataSource } from "../data-source";
 import * as bcrypt from "bcrypt";
 import * as jwt from "jsonwebtoken";
-<<<<<<< HEAD
-=======
-import { randomInt } from "crypto";
->>>>>>> b5127b8b97cf4c801f56f21d4b5279ad2c2e7070
 import { Response } from "express";
 import { Follows } from "../entities/Follows";
 
 export default new (class UserServices {
   private readonly UserRepository: Repository<User> = AppDataSource.getRepository(User);
   private readonly FollowingRepository: Repository<Follows> = AppDataSource.getRepository(Follows);
+
   async Register(data: any, res: Response): Promise<object | string> {
     try {
       const checkEmail = await this.UserRepository.exists({
@@ -88,13 +85,8 @@ export default new (class UserServices {
           username: checkUser.username,
           full_name: checkUser.full_name,
           email: checkUser.email,
-<<<<<<< HEAD
           profile_picture: checkUser.profile_picture,
           profile_description: checkUser.profile_description,
-=======
-          photo_profile: checkUser.photo_profile,
-          photo_background: checkUser.photo_background,
->>>>>>> b5127b8b97cf4c801f56f21d4b5279ad2c2e7070
           bio: checkUser.bio,
           followers_count: checkUser.follower.length,
           followings_count: checkUser.following.length,
@@ -112,55 +104,34 @@ export default new (class UserServices {
 
   async Update(data: any, res: Response): Promise<object | string> {
     try {
-<<<<<<< HEAD
-      console.log(data)
-=======
->>>>>>> b5127b8b97cf4c801f56f21d4b5279ad2c2e7070
       const user = await this.UserRepository.findOne({
         where: {
           id: data.id,
         },
       });
-<<<<<<< HEAD
-  
-=======
 
->>>>>>> b5127b8b97cf4c801f56f21d4b5279ad2c2e7070
       if (!user) {
         return res.status(404).json({
           message: `User with ID ${data.id} not found`,
         });
       }
-<<<<<<< HEAD
-  
+
       if (data.username && data.username !== user.username) {
         const existingUser = await this.UserRepository.findOne({
           where: {
             username: data.username,
           },
         });
-        
+
         if (existingUser) {
           return res.status(409).json({
             message: `Username ${data.username} is already taken`,
           });
         }
-        
+
         user.username = data.username;
       }
-  
-=======
 
-      if (user) {
-        return res.status(404).json({
-          message: `username ${data.username} already exists`,
-        });
-      }
-
-      if (data.username) {
-        user.username = data.username;
-      }
->>>>>>> b5127b8b97cf4c801f56f21d4b5279ad2c2e7070
       if (data.full_name) {
         user.full_name = data.full_name;
       }
@@ -170,17 +141,13 @@ export default new (class UserServices {
       if (data.email) {
         user.email = data.email;
       }
-<<<<<<< HEAD
       if (data.profile_picture) {
         user.profile_picture = data.profile_picture;
       }
       if (data.profile_description) {
         user.profile_description = data.profile_description;
       }
-  
-=======
 
->>>>>>> b5127b8b97cf4c801f56f21d4b5279ad2c2e7070
       const response = await this.UserRepository.save(user);
       return {
         message: "Updated success",
@@ -193,29 +160,9 @@ export default new (class UserServices {
       };
     }
   }
-<<<<<<< HEAD
-  
-=======
->>>>>>> b5127b8b97cf4c801f56f21d4b5279ad2c2e7070
 
   async getAll(loginSession: number): Promise<object | string> {
     try {
-      // const allUsers = await this.UserRepository.find();
-      // const userId = loginSession;
-      // const usersWithFollowingStatus = await Promise.all(
-      //   allUsers.map(async (user) => {
-      //     const userWithRelations = await this.UserRepository.findOne({
-      //       where: { id: userId },
-      //       relations: ["following"],
-      //     });
-      //     const is_following = userWithRelations?.following.some((followingUserId) => followingUserId.id === user.id);
-      //     return { ...user, is_following, userId };
-      //   })
-      // );
-      // return {
-      //   message: "Get all user success",
-      //   data: usersWithFollowingStatus,
-      // };
       const allUsers = await this.UserRepository.find();
       const userId = loginSession;
       return await Promise.all(
@@ -236,11 +183,7 @@ export default new (class UserServices {
             username: data.username,
             full_name: data.full_name,
             email: data.email,
-<<<<<<< HEAD
             profile_picture: data.profile_picture,
-=======
-            photo_profile: data.photo_profile,
->>>>>>> b5127b8b97cf4c801f56f21d4b5279ad2c2e7070
             bio: data.bio,
             userId: data.id,
             is_following: isFollowed > 0,
@@ -257,7 +200,11 @@ export default new (class UserServices {
 
   async getOne(id: number): Promise<object | string> {
     try {
-      const response = await this.UserRepository.findOneBy({ id });
+      const response = await this.UserRepository.findOne({
+        where: {
+          id: id,
+        },
+      });
 
       return {
         message: "Get one user success",
@@ -288,13 +235,8 @@ export default new (class UserServices {
           username: user.username,
           email: user.email,
           bio: user.bio,
-<<<<<<< HEAD
           profile_picture: user.profile_picture,
           profile_description: user.profile_description,
-=======
-          photo_profile: user.photo_profile,
-          photo_background: user.photo_background,
->>>>>>> b5127b8b97cf4c801f56f21d4b5279ad2c2e7070
           followers_count: user.follower.length,
           followings_count: user.following.length,
         },

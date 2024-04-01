@@ -19,35 +19,12 @@ export function useThreads() {
 
   const [data, setData] = React.useState<IPostThread>({
     content: "",
-    image: "",
+    image: null,
   });
-
-  const fileInputRef = React.useRef<HTMLInputElement>(null);
-
-  const handlePost = async () => {
-    try {
-      const formData = new FormData();
-      formData.append("content", data.content);
-      formData.append("image", data.image as File);
-
-      const response = await API.post("/threads", formData);
-      console.log("test", response.data);
-      dispatch(POST_THREAD(response.data));
-
-      setData({
-        content: "",
-        image: "",
-      });
-      
-      await getThreads();
-    } catch (error) {
-      console.error("Error posting thread:", error);
-    }
-  };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, files } = event.target;
-    if (files) {
+    if (files && files.length > 0) {
       setData({
         ...data,
         [name]: files[0],
@@ -60,10 +37,33 @@ export function useThreads() {
     }
   };
 
+  const fileInputRef = React.useRef<HTMLInputElement>(null);
+
+  const handlePost = async (event: React.FormEvent) => {
+    event.preventDefault();
+    try {
+      const formData = new FormData();
+      formData.append("content", data.content);
+      formData.append("image", data.image as File);
+      console.log(data.image);
+      const response = await API.post("/threads", formData);
+      console.log("test", response.data);
+      dispatch(POST_THREAD(response.data));
+      await getThreads();
+
+      setData({
+        content: "",
+        image: null,
+      });
+    } catch (error) {
+      console.error("Error posting thread:", error);
+    }
+  };
+
   async function getThreads() {
     try {
       const response = await API.get("/threads");
-      // console.log(response.data);
+      console.log(response.data);
       dispatch(GET_THREADS(response.data));
     } catch (error) {
       console.error("Error getting threads:", error);
@@ -76,6 +76,7 @@ export function useThreads() {
   }, [dispatch]);
 
   return {
+    data,
     threads,
     handlePost,
     fileInputRef,
