@@ -51,24 +51,20 @@ export default new (class UserControllers {
         full_name: req.body.full_name,
         bio: req.body.bio,
         profile_picture: req.file ? res.locals.filename : null,
-        profile_description: req.file ? res.locals.filename : null,
       };
 
       const { error, value } = updateValidation.validate(data);
       if (error) return res.status(400).json({ error: error.details[0].message });
 
       let cloudinaryResProfilePic = null;
-      let cloudinaryResProfileDesc = null;
 
       if (req.file) {
         cloudinaryResProfilePic = await cloudinary.destination(data.profile_picture);
-        cloudinaryResProfileDesc = await cloudinary.destination(data.profile_description);
       }
 
       const obj = {
         ...value,
         profile_picture: cloudinaryResProfilePic,
-        profile_description: cloudinaryResProfileDesc,
       };
 
       // console.log("obj", obj);
@@ -125,29 +121,31 @@ export default new (class UserControllers {
     }
   }
 
-  async updateBackground(req: Request, res: Response) {
-    try {
-      const userId = res.locals.loginSession.id;
-      const data = {
-        id: userId,
-        profile_description: req.file ? res.locals.filename : null,
-      };
+  // Di controller
+async updateBackground(req: Request, res: Response) {
+  try {
+    const userId = res.locals.loginSession.id;
+    const data = {
+      id: userId,
+      profile_description: req.file ? res.locals.filename : null,
+    };
 
-      const { error, value } = updateBackgroundValidation.validate(data);
-      if (error) return res.status(400).json({ error: error.details[0].message });
+    const { error, value } = updateBackgroundValidation.validate(data);
+    if (error) return res.status(400).json({ error: error.details[0].message });
 
-      let cloudinaryResProfileDesc = null;
+    let cloudinaryResProfileDesc = null;
 
-      if (req.file) {
-        cloudinaryResProfileDesc = await cloudinary.destination(value.profile_description);
-        data.profile_description = cloudinaryResProfileDesc;
-      }
-      console.log(data);
-      const response = await userServices.updateBackground(res, data as any);
-      return res.status(200).json(response);
-    } catch (error) {
-      console.log(error);
-      return res.status(500).json({ error: error.message });
+    if (req.file) {
+      cloudinaryResProfileDesc = await cloudinary.destination(value.profile_description);
+      data.profile_description = cloudinaryResProfileDesc;
     }
+
+    const response = await userServices.updateBackground(data, res);
+    return res.status(200).json(response);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ error: error.message });
   }
+}
+
 })();

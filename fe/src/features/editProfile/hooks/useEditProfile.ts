@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { ChangeEvent, FormEvent, useEffect } from "react";
+import { ChangeEvent, FormEvent, useEffect, useRef, useState } from "react";
 import { API, setAuthToken } from "../../../libs/axios";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../store/types/RootState";
@@ -9,15 +9,16 @@ export function useEditProfile() {
   setAuthToken(localStorage.token);
   const user = useSelector((state: RootState) => state.auth);
   const dispatch = useDispatch();
-  // console.log(id);
 
-  const [form, setForm] = React.useState<Record<string, any>>({
+  const [form, setForm] = useState<Record<string, any>>({
     full_name: user.data.full_name,
     username: user.data.username,
     bio: user.data.bio,
-    profile_picture: user,
-    profile_description: "",
+    profile_picture: null,
+    profile_description: null,
   });
+
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   async function handleChange(event: ChangeEvent<HTMLInputElement>) {
     const { name, value, files } = event.target;
@@ -34,8 +35,6 @@ export function useEditProfile() {
     }
   }
 
-  const fileInputRef = React.useRef<HTMLInputElement>(null);
-
   async function handleEditProfile(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     try {
@@ -44,15 +43,24 @@ export function useEditProfile() {
       formData.append("username", form.username || "");
       formData.append("bio", form.bio || "");
       formData.append("profile_picture", form.profile_picture as File);
-      formData.append("profile_description", form.profile_description as File);
-      // console.log("data", form);
-      // console.log("formData", formData);
 
       const response = await API.patch(`/user/edit-profile`, formData);
-      console.log("response", response.data);
-      dispatch(AUTH_UPDATE(form));
+      const updateData = response.data;
+      dispatch(AUTH_UPDATE(updateData));
     } catch (error) {
       console.log("Error edit profile :", error);
+    }
+  }
+
+  async function handleEditBackground(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    try {
+      const formData = new FormData();
+      formData.append("profile_description", form.profile_description as File);
+      const response = await API.patch(`/user/edit-background`, formData);
+      console.log("response", response.data);
+    } catch (error) {
+      console.log("Error edit profile background :", error);
     }
   }
 
@@ -61,7 +69,7 @@ export function useEditProfile() {
       full_name: user.data.full_name || "",
       username: user.data.username || "",
       bio: user.data.bio || "",
-      profile_picture: "",
+      profile_picture: null,
       profile_description: user.data.profile_description || null,
     });
   }, [user.data]);
@@ -69,6 +77,7 @@ export function useEditProfile() {
   return {
     handleChange,
     handleEditProfile,
+    handleEditBackground,
     fileInputRef,
     form,
   };

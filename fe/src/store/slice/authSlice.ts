@@ -5,13 +5,14 @@ import { setAuthToken } from "../../libs/axios";
 
 const initialAuthState: { data: IAuth } = {
   data: {
+    userId: 0,
     id: 0,
     username: "",
     full_name: "",
     email: "",
     bio: "",
-    profile_picture: "",
-    profile_description: "",
+    profile_picture: null,
+    profile_description: null,
     followers_count: 0,
     followings_count: 0,
   },
@@ -28,6 +29,7 @@ export const authSlice = createSlice({
       setAuthToken(token);
       localStorage.setItem("token", token);
       const user: IAuth = {
+        userId: payload.user.id,
         id: payload.user.id,
         username: payload.user.username,
         full_name: payload.user.full_name,
@@ -44,6 +46,7 @@ export const authSlice = createSlice({
     AUTH_CHECK: (state, action) => {
       const payload = action.payload;
       const user: IAuth = {
+        userId: payload.user.id,
         id: payload.user.id,
         username: payload.user.username,
         full_name: payload.user.full_name,
@@ -58,16 +61,7 @@ export const authSlice = createSlice({
       state.data = user;
     },
     AUTH_UPDATE: (state, action) => {
-      const { username, full_name, bio } = action.payload;
-      return {
-        ...state,
-        data: {
-          ...state.data,
-          username,
-          full_name,
-          bio,
-        },
-      };
+      state.data = action.payload;
     },
 
     AUTH_LOGOUT: (state) => {
@@ -75,6 +69,7 @@ export const authSlice = createSlice({
       setAuthToken(null);
 
       state.data = {
+        userId: 0,
         id: 0,
         username: "",
         full_name: "",

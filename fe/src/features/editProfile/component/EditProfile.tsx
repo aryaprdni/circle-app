@@ -11,6 +11,8 @@ const EditProfile = () => {
   const { handleEditProfile, handleChange, fileInputRef, form } = useEditProfile();
   return (
     <>
+    <form encType="multipart/form-data" onSubmit={handleEditProfile}>
+      <FormControl>
       <Text mt={"20px"} mb={"20px"} color={"White"}>
         My Profile
       </Text>
@@ -41,6 +43,7 @@ const EditProfile = () => {
         </Box>
         <Box cursor={"pointer"}>
           <Avatar borderRadius="full" boxSize="70px" src={user.data?.profile_picture} position={"relative"} top={"-30px"} left={"25px"} border="3px solid #3c4445" />
+
           <Input name="image" id="image-profile" type="file" style={{ display: "none" }} ref={fileInputRef} onChange={handleChange} accept="image/*" />
 
           <Box backgroundColor={"3c4445"} position={"absolute"} top={"52%"} left={"18%"} borderRadius={"100%"} textAlign={"center"} display={"flex"} justifyContent={"center"} alignItems={"center"} border={"3px solid #3c4445"}>
@@ -63,8 +66,8 @@ const EditProfile = () => {
         </Flex>
       </Card>
       <Divider orientation="horizontal" mt={"20px"} mb={"20px"} />
-      <form encType="multipart/form-data" onSubmit={handleEditProfile}>
-        <FormControl mb={"50px"}>
+      
+        <Box mb={"50px"}>
           <Flex gap={"8px"} flexDirection={"column"}>
             <FormLabel color={"white"}>Username</FormLabel>
             <Input id="username" type="text" name="username" value={form.username} color={"white"} onChange={handleChange} />
@@ -76,6 +79,7 @@ const EditProfile = () => {
               Edit profile
             </Button>
           </Flex>
+        </Box>
         </FormControl>
       </form>
     </>

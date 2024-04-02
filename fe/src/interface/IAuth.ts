@@ -5,8 +5,8 @@ export interface IAuth {
   full_name: string;
   email: string;
   bio: string;
-  profile_picture?: string;
-  profile_description?: string;
+  profile_picture?: string | null;
+  profile_description?: string | null;
   followers_count: number;
   followings_count: number;
 }
