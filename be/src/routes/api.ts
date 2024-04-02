@@ -16,6 +16,7 @@ router.post("/user/login", UserControllers.login);
 router.get("/users", authMiddleware.Auth, UserControllers.getAll);
 // router.get("/user/:id", authMiddleware.Auth, UserControllers.getOne);
 router.get("/user/check", authMiddleware.Auth, UserControllers.check);
+router.patch("/user/edit-background", authMiddleware.Auth, uploadFile("profile_description"), UserControllers.updateBackground);
 
 // Threads
 router.post("/threads", authMiddleware.Auth, uploadFile("image"), threadsControllers.create);

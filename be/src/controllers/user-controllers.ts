@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import userServices from "../services/user-services";
-import { loginValidation, registerValidation, updateValidation } from "../utils/validator/user-validation";
+import { loginValidation, registerValidation, updateBackgroundValidation, updateValidation } from "../utils/validator/user-validation";
 import cloudinary from "../libs/cloudinary";
 
 export default new (class UserControllers {
@@ -71,7 +71,7 @@ export default new (class UserControllers {
         profile_description: cloudinaryResProfileDesc,
       };
 
-      console.log("obj", obj);
+      // console.log("obj", obj);
 
       const response = await userServices.Update(obj, res);
       return res.status(201).json(response);
@@ -121,6 +121,32 @@ export default new (class UserControllers {
 
       return res.status(200).json(response);
     } catch (error) {
+      return res.status(500).json({ error: error.message });
+    }
+  }
+
+  async updateBackground(req: Request, res: Response) {
+    try {
+      const userId = res.locals.loginSession.id;
+      const data = {
+        id: userId,
+        profile_description: req.file ? res.locals.filename : null,
+      };
+
+      const { error, value } = updateBackgroundValidation.validate(data);
+      if (error) return res.status(400).json({ error: error.details[0].message });
+
+      let cloudinaryResProfileDesc = null;
+
+      if (req.file) {
+        cloudinaryResProfileDesc = await cloudinary.destination(value.profile_description);
+        data.profile_description = cloudinaryResProfileDesc;
+      }
+      console.log(data);
+      const response = await userServices.updateBackground(res, data as any);
+      return res.status(200).json(response);
+    } catch (error) {
+      console.log(error);
       return res.status(500).json({ error: error.message });
     }
   }

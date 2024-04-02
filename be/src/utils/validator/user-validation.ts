@@ -23,4 +23,9 @@ const loginValidation = Joi.object({
   password: Joi.string().max(100).required(),
 });
 
-export { updateValidation, loginValidation, registerValidation };
+const updateBackgroundValidation = Joi.object({
+  id: Joi.number().required(),
+  profile_description: Joi.string().allow(null),
+});
+
+export { updateValidation, loginValidation, registerValidation, updateBackgroundValidation };

@@ -245,4 +245,31 @@ export default new (class UserServices {
       throw new Error(error.message);
     }
   }
+
+  async updateBackground(data: any, res: Response) {
+    try {
+      console.log(data.profile_description);
+      const user = await this.UserRepository.findOne({
+        where: {
+          id: data.id,
+        },
+      });
+      // console.log(user);
+      if (!user) {
+        return res.status(404).json({
+          message: `User with ID ${data.id} not found`,
+        });
+      }
+      if (data.profile_description !== null) {
+        user.profile_description = data.profile_description;
+      }
+      const response = await this.UserRepository.save(user);
+      return {
+        message: "Updated success",
+        data: response,
+      };
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  }
 })();
