@@ -141,8 +141,11 @@ export default new (class UserServices {
       if (data.email) {
         user.email = data.email;
       }
-      if (data.profile_picture) {
+      if (data.profile_picture !== null) {
         user.profile_picture = data.profile_picture;
+      }
+      if (data.profile_description !== null) {
+        user.profile_description = data.profile_description;
       }
 
       const response = await this.UserRepository.save(user);
@@ -262,6 +265,7 @@ async updateBackground(data: any, res: Response) {
     if (data.profile_description !== null) {
       user.profile_description = data.profile_description;
     }
+    
 
     const response = await this.UserRepository.save(user);
     return {

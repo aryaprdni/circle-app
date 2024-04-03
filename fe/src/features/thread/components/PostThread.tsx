@@ -21,7 +21,7 @@ const Content = () => {
         <Flex alignItems="center" gap="20px" justifyContent="center">
           <form onSubmit={handlePost} encType="multipart/form-data">
             <FormControl display={"flex"} alignItems={"center"} justifyContent={"center"} gap={"20px"}>
-              <Avatar src={user.data.profile_picture} borderRadius="full" boxSize="40px" mr="10px" />
+              <Avatar src={user.data.profile_picture ?? ""} borderRadius="full" boxSize="40px" mr="10px" />
 
               <Input maxW="50%" border="none" placeholder="What is happening?!" onChange={handleChange} name="content" value={data.content} />
 

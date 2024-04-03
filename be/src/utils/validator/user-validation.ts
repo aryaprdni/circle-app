@@ -13,6 +13,7 @@ const updateValidation = Joi.object({
   full_name: Joi.string().max(100).allow(null),
   bio: Joi.string().max(100).allow(null),
   profile_picture: Joi.string().allow(null),
+  profile_description: Joi.string().allow(null),
 });
 
 const loginValidation = Joi.object({

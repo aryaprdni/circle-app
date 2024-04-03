@@ -61,8 +61,12 @@ export const authSlice = createSlice({
       state.data = user;
     },
     AUTH_UPDATE: (state, action) => {
-      state.data = action.payload;
+      state.data = {
+        ...state.data,
+        ...action.payload,
+      };
     },
+
 
     AUTH_LOGOUT: (state) => {
       localStorage.removeItem("token");

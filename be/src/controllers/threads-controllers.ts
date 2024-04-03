@@ -10,8 +10,9 @@ export default new (class ThreadsController {
       const userId = res.locals.loginSession.id;
       const data = {
         content: req.body.content,
-        image: req.file ? res.locals.filename : null,
+        image: req.file ? req.file.filename : null,
       };
+      console.log(data)
 
       const { error, value } = createValidation.validate(data);
       if (error) return res.status(400).json(error);
@@ -52,7 +53,7 @@ export default new (class ThreadsController {
 
       const data = {
         content: req.body.content,
-        image: res.locals.filename,
+        image: req.file ? req.file.filename : null,
       };
 
       const { error, value } = updateValidation.validate(data);

@@ -10,7 +10,7 @@ export default new (class RepliesController {
       const userId = res.locals.loginSession.id;
       const data = {
         content: req.body.content,
-        image: req.file ? res.locals.filename : null,
+        image: req.file ? req.file.filename : null,
       };
 
       const { error, value } = createValidation.validate(data);
@@ -56,7 +56,7 @@ export default new (class RepliesController {
       const userId = res.locals.loginSession.id;
       const data = {
         content: req.body.content,
-        image: res.locals.image_filename,
+        image: req.file ? req.file.filename : null,
       };
 
       const { error, value } = updateValidation.validate(data);
