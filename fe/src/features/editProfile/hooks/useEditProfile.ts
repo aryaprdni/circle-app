@@ -5,6 +5,7 @@ import { API, setAuthToken } from "../../../libs/axios";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../store/types/RootState";
 import { AUTH_UPDATE } from "../../../store/RootReducer";
+import { toast } from "react-toastify";
 
 export function useEditProfile() {
   setAuthToken(localStorage.token);
@@ -56,27 +57,34 @@ export function useEditProfile() {
       const response = await API.patch(`/user/edit-profile`, formData);
       const updatedUserData = response.data;
       console.log(response.data);
-      
       dispatch(AUTH_UPDATE(updatedUserData));
+      localStorage.setItem("profileUpdated", "true");
 
-      // Update form state
-      setForm({
-        ...updatedUserData,
-      });
+      window.location.reload();
     } catch (error) {
       console.log("Error edit profile :", error);
     }
   }
 
+  window.onload = function() {
+    const profileUpdated = localStorage.getItem("profileUpdated");
+    if (profileUpdated === "true") {
+      localStorage.removeItem("profileUpdated");
+      toast.success("Profile updated successfully");
+    }
+  };
+
   useEffect(() => {
-    setForm({
+    setForm(prevForm => ({
+      ...prevForm,
       full_name: user.data.full_name || "",
       username: user.data.username || "",
       bio: user.data.bio || "",
       profile_picture: user.data.profile_picture || null,
       profile_description: user.data.profile_description || null,
-    });
-  }, [dispatch, user.data]);
+    }));
+  }, [user.data]);
+  
 
   return {
     handleChange,

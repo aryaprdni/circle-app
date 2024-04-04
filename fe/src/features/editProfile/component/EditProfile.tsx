@@ -17,9 +17,7 @@ const EditProfile = () => {
         </Text>
         <Card bgColor="#262626" p={"20px"}>
           <Box>
-            <Image src={form.profile_description?? ""} fallbackSrc="https://via.placeholder.com/150" borderRadius="lg" h={"150px"} width="100%" />
-
-            <Input name="image" id="profile_description" type="file" style={{ display: "none" }} ref={backgroundPictureInputRef} onChange={handleChange} accept="image/*" />
+            <Image src={user.data.profile_description?? ""} fallbackSrc="https://via.placeholder.com/150" borderRadius="lg" h={"150px"} width="100%" />
 
             <Box
               background={"#3c4445"}
@@ -35,15 +33,17 @@ const EditProfile = () => {
               alignItems={"center"}
               border={"3px solid #3c4445"}
             >
-              <label htmlFor="profile_picture">
+              <label htmlFor="profile_description">
                 <LuImagePlus fontSize="30px" color="green" />
               </label>
+
+              <Input name="profile_description" id="profile_description" type="file" style={{ display: "none" }} ref={backgroundPictureInputRef} onChange={handleChange} accept="image/*" />
             </Box>
           </Box>
           <Box cursor={"pointer"}>
-            <Avatar borderRadius="full" boxSize="70px" src={form.profile_picture ?? ""} position={"relative"} top={"-30px"} left={"25px"} border="3px solid #3c4445" />
+            <Avatar borderRadius="full" boxSize="70px" src={user.data.profile_picture ?? ""} position={"relative"} top={"-30px"} left={"25px"} border="3px solid #3c4445" />
 
-            <Input name="image" id="profile_picture" type="file" style={{ display: "none" }} ref={profilePictureInputRef} onChange={handleChange} accept="image/*" />
+            <Input name="profile_picture" id="profile_picture" type="file" style={{ display: "none" }} ref={profilePictureInputRef} onChange={handleChange} accept="image/*" />
 
             <Box backgroundColor={"3c4445"} position={"absolute"} top={"52%"} left={"18%"} borderRadius={"100%"} textAlign={"center"} display={"flex"} justifyContent={"center"} alignItems={"center"} border={"3px solid #3c4445"}>
               <label htmlFor="profile_picture">
@@ -53,14 +53,14 @@ const EditProfile = () => {
           </Box>
 
           <Flex flexDirection={"column"} color={"white"} mt="-25px" gap={"4px"}>
-            <Text fontSize={"xl"}>{form.full_name}</Text>
+            <Text fontSize={"xl"}>{user.data.full_name}</Text>
             <Text fontSize={"md"} color={"grey"}>
-              @{form.username}
+              @{user.data.username}
             </Text>
-            <Text>{form.bio}</Text>
+            <Text>{user.data.bio}</Text>
             <Flex gap={"10px"}>
-              <Flex>{form.followings_count} Following</Flex>
-              <Flex>{form.followers_count} Follower</Flex>
+              <Flex>{user.data.followings_count} Following</Flex>
+              <Flex>{user.data.followers_count} Follower</Flex>
             </Flex>
           </Flex>
         </Card>

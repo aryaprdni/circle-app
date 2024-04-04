@@ -61,10 +61,7 @@ export const authSlice = createSlice({
       state.data = user;
     },
     AUTH_UPDATE: (state, action) => {
-      state.data = {
-        ...state.data,
-        ...action.payload,
-      };
+      state.data = action.payload;
     },
 
 
