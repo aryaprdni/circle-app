@@ -17,20 +17,22 @@ const ContentThead = () => {
       <Box>
         {threads.threads.map((thread: ThreadInterface, index: number) => (
           <Box key={index} bgColor="#1d1d1d" color="white" borderY={"1px solid grey"} m="0 auto" p="10px" w="100%">
-            <Flex mb="15px" ml="6%">
+            <Flex mb="15px" ml={{base: "0", md: "6%", lg: "6%", xl: "6%"}}>
               <Box mr="18px">
                 <Avatar src={thread.user?.profile_picture} borderRadius="full" boxSize="40px" objectFit="cover" />
               </Box>
 
               <Box>
-                <Flex gap="10px" alignItems="center" mb="10px">
-                  <Text>{thread.user?.full_name}</Text>
-                  <Text fontSize="xs" color="grey">
-                    @{thread.user?.username}
-                  </Text>
-                  <Text fontSize="xs" color="grey">
-                    {new Date(thread.created_at).toLocaleString()}
-                  </Text>
+                <Flex gap="10px" mb="10px" flexDirection={{base: "column", md: "row"}}>
+                  <Flex alignItems="center">
+                    <Text mr={"10px"}>{thread.user?.full_name}</Text>
+                    <Text fontSize="xs" color="grey">
+                      {new Date(thread.created_at).toLocaleString()}
+                    </Text>
+                  </Flex>
+                    <Text color={"grey"}>
+                      @{thread.user?.username}
+                    </Text>
                 </Flex>
 
                 <Box>

@@ -21,13 +21,13 @@ const MenuBar = () => {
     <>
       <Container>
         <Flex flexDirection={{ base: "row", md: "row", lg: "column", xl: "column" }} justify={"space-between"} gap={4} minHeight={Menubar}>
-          <Box color="green" as="b" fontSize="6xl" ml="30px" display={{ base: "none", lg: "block", xl: "block" }}>
+          <Box color="green" as="b" ml="30px" display={{ base: "none", lg: "block", xl: "block" }} fontSize={{base: "3xl", lg: "5xl", xl: "5xl"}}>
             circle
           </Box>
 
           <NavLink to="/">
             <Flex display="flex" flexDirection="row" alignItems="center" color="white" ml="30px">
-              <FaHome />
+              <FaHome fontSize={"20px"}/>
               <Text ml="10px" display={{ base: "none", lg: "block", xl: "block" }}>
                 Home
               </Text>
@@ -36,7 +36,7 @@ const MenuBar = () => {
 
           <NavLink to="/search">
             <Flex display="flex" flexDirection="row" alignItems="center" color="white" ml="30px">
-              <RiUserSearchFill />
+              <RiUserSearchFill fontSize={"20px"}/>
               <Text ml="10px" display={{ base: "none", lg: "block", xl: "block" }}>
                 Search{" "}
               </Text>
@@ -45,7 +45,7 @@ const MenuBar = () => {
 
           <NavLink to="/follows">
             <Flex display="flex" flexDirection="row" alignItems="center" color="white" ml="30px">
-              <FaHeart />
+              <FaHeart fontSize={"20px"}/>
               <Text ml="10px" display={{ base: "none", lg: "block", xl: "block" }}>
                 Follows{" "}
               </Text>
@@ -54,7 +54,7 @@ const MenuBar = () => {
 
           <NavLink to="/profile">
             <Flex display="flex" flexDirection="row" alignItems="center" color="white" ml="30px">
-              <CgProfile />
+              <CgProfile fontSize={"20px"}/>
               <Text ml="10px" display={{ base: "none", lg: "block", xl: "block" }}>
                 Profile{" "}
               </Text>

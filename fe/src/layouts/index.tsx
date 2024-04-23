@@ -7,7 +7,7 @@ const Main = ({ children }: { children: React.ReactNode }) => {
   return (
     <>
       <Grid templateColumns="repeat(12, 1fr)" bgColor="#1d1d1d" gap={4}>
-        <GridItem colSpan={{ base: 12, lg: 2, xl: 2 }} display={{ base: "block", lg: "block", xl: "block" }}>
+        <GridItem colSpan={{ base: 12, lg: 2, xl: 2 }} display={{ base: "block", lg: "block", xl: "block" }} mt={5}>
           <MenuBar />
         </GridItem>
 
