@@ -59,52 +59,85 @@ export default new (class RepliesService {
         throw new Error("Thread ID is not a number");
       }
 
-      const cacheKey = `replies?thread_id=${threadId}`;
-      await redisClient.del(cacheKey);
-      let data = await redisClient.get(cacheKey);
-
-      if (!data) {
-        const replies = await this.RepliesRepository.find({
-          relations: ["user", "threads"],
-          where: {
-            threads: {
-              id: threadId,
-            },
+      const response = await this.RepliesRepository.find({
+        relations: ["user", "threads"],
+        where: {
+          threads: {
+            id: threadId,
           },
-          order: {
-            id: "DESC",
+        },
+        order: {
+          id: "DESC",
+        },
+        select: {
+          user: {
+            id: true,
+            username: true,
+            full_name: true,
+            profile_picture: true,
           },
-          select: {
-            user: {
-              id: true,
-              username: true,
-              full_name: true,
-              profile_picture: true,
-            },
-            threads: {
-              id: true,
-              content: true,
-              image: true,
-            },
+          threads: {
             id: true,
             content: true,
             image: true,
           },
-        });
-
-        await redisClient.set(cacheKey, JSON.stringify(replies));
-        data = JSON.stringify(replies);
-      }
-
-      const parsedData = JSON.parse(data);
-      if (!parsedData) {
-        throw new Error("Parsed data is empty");
-      }
+          id: true,
+          content: true,
+          image: true,
+        },
+      });
 
       return {
-        message: "Get all replies",
-        data: parsedData,
+        message: "Get replies success",
+        data: response,
       };
+
+      // const cacheKey = `replies?thread_id=${threadId}`;
+      // await redisClient.del(cacheKey);
+      // let data = await redisClient.get(cacheKey);
+
+      // if (!data) {
+      //   const replies = await this.RepliesRepository.find({
+      //     relations: ["user", "threads"],
+      //     where: {
+      //       threads: {
+      //         id: threadId,
+      //       },
+      //     },
+      //     order: {
+      //       id: "DESC",
+      //     },
+      //     select: {
+      //       user: {
+      //         id: true,
+      //         username: true,
+      //         full_name: true,
+      //         profile_picture: true,
+      //       },
+      //       threads: {
+      //         id: true,
+      //         content: true,
+      //         image: true,
+      //       },
+      //       id: true,
+      //       content: true,
+      //       image: true,
+      //     },
+      //   });
+
+      //   await redisClient.set(cacheKey, JSON.stringify(replies));
+      //   data = JSON.stringify(replies);
+      // }
+
+      // const parsedData = JSON.parse(data);
+      // if (!parsedData) {
+      //   throw new Error("Parsed data is empty");
+      // }
+
+      // return {
+      //   message: "Get all replies",
+      //   data: parsedData,
+      // };
     } catch (error) {
       console.error("Error in getAll:", error);
       throw new Error("Internal server error");
