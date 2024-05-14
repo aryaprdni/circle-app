@@ -19,7 +19,7 @@ const ContentThead = () => {
           <Box key={index} bgColor="#1d1d1d" color="white" borderY={"1px solid grey"} m="0 auto" p="10px" w="100%">
             <Flex mb="15px" ml={{base: "0", md: "6%", lg: "6%", xl: "6%"}}>
               <Box mr="18px">
-                <Avatar src={thread.user?.profile_picture} borderRadius="full" boxSize="40px" objectFit="cover" />
+                <Avatar src={thread.user?.profile_picture ?? ""} borderRadius="full" boxSize="40px" objectFit="cover" />
               </Box>
 
               <Box>

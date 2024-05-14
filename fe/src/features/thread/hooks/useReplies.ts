@@ -3,7 +3,7 @@
 import { useParams } from "react-router-dom";
 import { API, setAuthToken } from "../../../libs/axios";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
-import { IReplyThread, ThreadInterface } from "../../../interface/IThread";
+import { ThreadInterface } from "../../../interface/IThread";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../store/types/RootState";
 import { GET_REPLIES } from "../../../store/RootReducer";
@@ -71,7 +71,7 @@ export function useReplies() {
       formData.append("content", data.content);
       formData.append("image", data.image as File);
       formData.append("threads", data.threads);
-      const response = await API.post("/replies", formData);
+      await API.post("/replies", formData);
       // console.log(response.data);
       getReplies();
 
@@ -87,7 +87,8 @@ export function useReplies() {
   useEffect(() => {
     getThreadById();
     getReplies();
-  }, [dispatch]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dispatch, getThreadById()]);
 
   return {
     data,

@@ -1,13 +1,9 @@
 import { Container, Card, Box, Flex, Heading, Text, Input, Button } from "@chakra-ui/react";
-import { useSelector } from "react-redux";
-import { RootState } from "../../../store/types/RootState";
 import { useLogin } from "../hooks/useLogin";
 import { useNavigate } from "react-router-dom";
 
 const FormLogin = () => {
   const { handleChange, handleLogin } = useLogin();
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const auth = useSelector((state: RootState) => state.auth);
   const navigate = useNavigate();
   return (
     <>

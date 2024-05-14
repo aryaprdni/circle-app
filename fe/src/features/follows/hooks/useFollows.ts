@@ -1,16 +1,12 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable no-useless-catch */
 import { useDispatch, useSelector } from "react-redux";
 import { API, setAuthToken } from "../../../libs/axios";
-import { GET_FOLLOWS, GET_USERS, SET_FOLLOW } from "../../../store/RootReducer";
+import { GET_FOLLOWS, SET_FOLLOW } from "../../../store/RootReducer";
 import { useEffect } from "react";
 import { RootState } from "../../../store/types/RootState";
-import { IUserSearch } from "../../../interface/IAuth";
 
 export default function useFollows() {
   setAuthToken(localStorage.token);
   const users = useSelector((state: RootState) => state.users);
-  const auth = useSelector((state: RootState) => state.auth);
   const followState = useSelector((state: RootState) => state.follow.followState);
   const follows = useSelector((state: RootState) => state.follow.follows);
   const dispatch = useDispatch();
@@ -26,13 +22,13 @@ export default function useFollows() {
     try {
       dispatch(SET_FOLLOW({ id: id, is_following: !is_following }));
       if (!is_following) {
-        const response = await API.post(`/follow`, {
+        await API.post(`/follow`, {
           followingUserId: followingUserId,
         });
         await getFollowData();
         // console.log("berhasil follow!", response.data);
       } else {
-        const response = await API.delete(`/follow/${followingUserId}`);
+        await API.delete(`/follow/${followingUserId}`);
         // console.log("berhasil unfollow!", response.data);
         await getFollowData();
       }

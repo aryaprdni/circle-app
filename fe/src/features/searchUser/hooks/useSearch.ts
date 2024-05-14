@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { useDispatch, useSelector } from "react-redux";
@@ -45,12 +46,12 @@ export function useSearchUsers() {
     try {
       dispatch(SET_FOLLOW({ id: id, is_following: !is_following }));
       if (!is_following) {
-        const response = await API.post(`/follow`, {
+        await API.post(`/follow`, {
           followingUserId: followingUserId,
         });
         // console.log("berhasil follow!", response.data);
       } else {
-        const response = await API.delete(`/follow/${followingUserId}`);
+        await API.delete(`/follow/${followingUserId}`);
         // console.log("berhasil unfollow!", response.data);
       }
 
@@ -79,5 +80,6 @@ export function useSearchUsers() {
     handleSearch,
     filteredResults,
     handleFollow,
+    search
   };
 }
