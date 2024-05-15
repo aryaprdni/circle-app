@@ -3,8 +3,8 @@ import { BiSolidCommentDetail } from "react-icons/bi";
 import { useReplies } from "../features/thread/hooks/useReplies";
 import { FaHeart } from "react-icons/fa";
 import { useLike } from "../features/thread/hooks/useLike";
-import { IReplies } from "../interface/IThread";
 import { LuImagePlus } from "react-icons/lu";
+import { IReply } from "../interface/IReplies";
 
 const Detail = () => {
   const { threadDetail, replies, handleChange, HandlePostReply, fileInputRef, data } = useReplies();
@@ -75,7 +75,7 @@ const Detail = () => {
         </form>
       </Flex>
       <Box>
-        {replies?.replies?.data?.map((replies: IReplies, index: number) => {
+        {replies.data.map((replies: IReply, index: number) => {
           return (
             <Box bgColor="#1d1d1d" color="white" borderY={"1px solid grey"} m="0 auto" p="10px" w="100%" key={index}>
               <Flex mb="15px" ml="6%">

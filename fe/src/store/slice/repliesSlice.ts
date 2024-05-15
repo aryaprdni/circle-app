@@ -1,15 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { IReplies } from "../../interface/IReplies";
 
-const initialRepliesState: { replies: IReplies[] } = { replies: [] };
+const initialRepliesState: IReplies = { data: [] };
 
 export const repliesSlice = createSlice({
   name: "replies",
   initialState: initialRepliesState,
   reducers: {
     GET_REPLIES: (state, action) => {
-      state.replies = action.payload;
-      // console.log("action", action);
+      state.data = action.payload.data;
     },
   },
 });
+

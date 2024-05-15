@@ -1,7 +1,7 @@
-export type IReplies = {
+export type IReply = {
   id: number;
   user: {
-    photo_profile: string;
+    profile_picture: string;
     full_name: string;
     username: string;
   };
@@ -11,6 +11,10 @@ export type IReplies = {
   likes_count: number;
   replies_count: number;
 };
+
+export interface IReplies {
+  data: IReply[];
+}
 
 export type IReplyPost = {
   content: string;
